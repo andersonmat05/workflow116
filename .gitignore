@@ -27,3 +27,7 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+/.idea/.gitignore
+/.idea/discord.xml
+/.idea/misc.xml
+/.idea/modules.xml
