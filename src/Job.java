@@ -10,4 +10,11 @@ public class Job {
         this.startTime = startTime;
         this.duration = duration;
     }
+
+    public void printInfo() {
+        System.out.print("Job ID: " + jobID);
+        System.out.print("  Job Type ID: " + jobTypeID);
+        System.out.print("  Job Start Time: " + startTime);
+        System.out.println("  Job Duration: " + duration);
+    }
 }
