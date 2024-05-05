@@ -1,9 +1,9 @@
 public class FileErrorException extends Exception {
-    private final int errorLine;
+    private final int line;
     private final ExceptionCause cause;
 
-    public FileErrorException(int errorLine, ExceptionCause exceptionCause) {
-        this.errorLine = errorLine;
+    public FileErrorException(int line, ExceptionCause exceptionCause) {
+        this.line = line;
         this.cause = exceptionCause;
     }
 
@@ -12,7 +12,7 @@ public class FileErrorException extends Exception {
      */
     @Override
     public String getMessage() {
-        return String.format("%s at line %s: %s", cause.Type.text, errorLine, cause.Message);
+        return String.format("%s at line %s: %s", cause.Type.text, line, cause.Message);
     }
 
     public enum ExceptionType {
