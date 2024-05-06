@@ -1,3 +1,4 @@
+package src;
 public class Job {
     private final String jobID;
     private final String jobTypeID;
