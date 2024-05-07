@@ -1,14 +1,14 @@
 public final class Task {
-    public static final float defaultSize = 1.f;
-
-    public final String type;
+    public final TaskType type;
     public final float size;
 
-    public Task(String type) {
-        this(type, defaultSize);
+    // Use default size
+    public Task(TaskType type) {
+        this(type, type.defaultSize);
     }
 
-    public Task(String type, float size) {
+    // Override default size
+    public Task(TaskType type, float size) {
         this.type = type;
         this.size = size;
     }
