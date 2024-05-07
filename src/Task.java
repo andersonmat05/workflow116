@@ -1,9 +1,11 @@
-public class Task {
-    private final String taskType;
-    public final int taskSize;
+public final class Task {
+    public static final float defaultSize = 3.f;
 
-    public Task(String taskType, int taskSize) {
-        this.taskType = taskType;
-        this.taskSize = taskSize;
+    public final String type;
+    public final float size;
+
+    public Task(String Type, int Size, String type, float size) {
+        this.type = type;
+        this.size = size;
     }
 }
