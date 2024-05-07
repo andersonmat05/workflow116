@@ -1,16 +1,18 @@
-import java.util.List;
+import java.util.ArrayList;
 
 public class Station {
     private final String stationID;
     private final int capacity;
-    private final float speed;
-    private List<String> taskTypes;
+    private final boolean multiFlag;
+    private final boolean fifoFlag;
+    private ArrayList<Task> tasks;
 
-    public Station(String stationID, int capacity, float speed, List<String> taskTypes) {
+    public Station(String stationID, int capacity, boolean multiFlag, boolean fifoFlag, ArrayList<Task> tasks) {
         this.stationID = stationID;
         this.capacity = capacity;
-        this.speed = speed;
-        this.taskTypes = taskTypes;
+        this.multiFlag = multiFlag;
+        this.fifoFlag = fifoFlag;
+        this.tasks = tasks;
     }
 
     public String getStationID() {
@@ -21,11 +23,9 @@ public class Station {
         return capacity;
     }
 
-    public double getSpeed() {
-        return speed;
+    public ArrayList<Task> getTasks() {
+        return tasks;
     }
 
-    public List<String> getTasks() {
-        return taskTypes;
-    }
+    public boolean isMultiFlag() { return multiFlag; }
 }

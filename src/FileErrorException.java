@@ -43,6 +43,7 @@ public class FileErrorException extends Exception {
         TASKTYPES_NOT_FIRST(ExceptionType.SYNTAX_ERROR, "TASKTYPES must be the first section in workflow file."),
         TASK_INVALID(ExceptionType.SEMANTIC_ERROR, "Task type defined incorrectly."),
         TASK_SIZE_INVALID(ExceptionType.SEMANTIC_ERROR, "Task size is not a floating point number."),
+        STATION_CAPACITY_INVALID(ExceptionType.SEMANTIC_ERROR, "Station capacity is defined incorrectly."),
 
         JOB_INVALID(ExceptionType.SEMANTIC_ERROR, "Job type defined incorrectly."),
         TASKTYPE_NOT_DEFINED(ExceptionType.SEMANTIC_ERROR, "Task type not defined."),

@@ -11,7 +11,6 @@ public class EventManager {
     public static void getStatus(List<Station> stations) {
         for (Station station : stations) {
             System.out.println("ID of Station: " + station.getStationID());
-            System.out.println("Tasks of Station: " + station.getTasks());
         }
     }
 }
