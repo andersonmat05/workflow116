@@ -29,13 +29,13 @@ public class FileErrorException extends Exception {
     }
 
     public enum ExceptionCause {
-        UNKNOWN(ExceptionType.UNKNOWN, "an unknown error occurred."),
+        UNKNOWN(ExceptionType.UNKNOWN, "An unknown error occurred."),
         LINE_BLANK(ExceptionType.SYNTAX_ERROR , "Line is blank."),
         ARGS_FEW(ExceptionType.SYNTAX_ERROR,"Too few arguments supplied."),
         ARGS_MANY(ExceptionType.SYNTAX_ERROR, "Too many arguments supplied."),
         // job
-        START_TIME_INVALID(ExceptionType.SYNTAX_ERROR, "Specified start time could not be parsed as a number."),
-        DURATION_INVALID(ExceptionType.SYNTAX_ERROR, "Specified duration could not be parsed as a number."),
+        START_TIME_INVALID(ExceptionType.SEMANTIC_ERROR, "Specified start time could not be parsed as a number."),
+        DURATION_INVALID(ExceptionType.SEMANTIC_ERROR, "Specified duration could not be parsed as a number."),
         // end job
         ;
         /** Type of the error. **/

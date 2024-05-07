@@ -1,5 +1,3 @@
-package src;
-
 public class Task {
     private final String taskType;
     public final int taskSize;
