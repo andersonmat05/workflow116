@@ -19,7 +19,7 @@ public class FileManager {
 
     public static void parseFiles(String workflowFile, String jobFile) {
 
-        //todo: Parse workflow file
+        // todo: Parse workflow file
         try {
             parseWorkflowFile(workflowFile);
         } catch (FileNotFoundException e) {
@@ -35,7 +35,6 @@ public class FileManager {
         } catch (FileNotFoundException e) {
             System.out.println("Error reading job file: " + e.getMessage());
         }
-
 
         // Report all errors
         reportErrors();
@@ -93,7 +92,6 @@ public class FileManager {
                 // parse line
                 parseWorkflowLine(parsedObjects, currentSection, lineElements, lineIndex);
 
-
             } catch (FileErrorException e) {
                 workflowFileErrors.add(e);
             }
@@ -113,11 +111,12 @@ public class FileManager {
     }
 
     /**
-     * @param section Last used section type
+     * @param section      Last used section type
      * @param lineElements Array of elements in the line to be parsed
-     * @param lineIndex Used for error reporting
+     * @param lineIndex    Used for error reporting
      */
-    private static void parseWorkflowLine(ArrayList<Object> objects, WorkflowSection section, String[] lineElements, int lineIndex) throws FileErrorException {
+    private static void parseWorkflowLine(ArrayList<Object> objects, WorkflowSection section, String[] lineElements,
+            int lineIndex) throws FileErrorException {
         System.out.println("Parsing line: " + lineIndex + " -> " + Arrays.toString(lineElements));
 
         // iterate elements
@@ -128,7 +127,8 @@ public class FileManager {
                 try {
                     section = WorkflowSection.valueOf(lineElements[i]);
                 } catch (IllegalArgumentException e) {
-                    throw new FileErrorException(lineIndex, FileErrorException.ExceptionCause.SECTION_IDENTIFIER_INVALID);
+                    throw new FileErrorException(lineIndex,
+                            FileErrorException.ExceptionCause.SECTION_IDENTIFIER_INVALID);
                 }
             } else {
                 // ensure section
@@ -145,10 +145,11 @@ public class FileManager {
                             System.out.println("TASKTYPE ELEMENT: " + lineElements[i]);
 
                             // check if there is next element
-                            if (lineElements.length-1 > i+1) {
+                            if (lineElements.length - 1 > i + 1) {
                                 // check if positive float
-                                if (lineElements[i+1].trim().matches(REGEX_FLOAT)) {
-                                    objects.add(new Task(lineElements[i].trim(), Float.parseFloat(lineElements[i+1])));
+                                if (lineElements[i + 1].trim().matches(REGEX_FLOAT)) {
+                                    objects.add(
+                                            new Task(lineElements[i].trim(), Float.parseFloat(lineElements[i + 1])));
                                     i++; // skip to next element
                                     continue;
                                 }
@@ -159,10 +160,10 @@ public class FileManager {
                         }
                         break;
                     case JOBTYPES:
-                        //TODO
+                        // TODO
                         break;
                     case STATIONS:
-                        //TODO
+                        // TODO
                         break;
                 }
             }
@@ -183,9 +184,9 @@ public class FileManager {
         } else if (args.length > 4) {
             throw new FileErrorException(line, FileErrorException.ExceptionCause.ARGS_MANY);
         }
-        //todo: check if unique
+        // todo: check if unique
         String jobID = args[0];
-        //todo: check workflow to find definition
+        // todo: check workflow to find definition
         String jobTypeID = args[1];
 
         int startTime, duration;

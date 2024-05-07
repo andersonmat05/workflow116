@@ -12,13 +12,20 @@ public class Station {
         this.speed = speed;
         this.taskTypes = taskTypes;
     }
+
     public String getStationID() {
         return stationID;
     }
+
     public int getCapacity() {
         return capacity;
     }
+
     public double getSpeed() {
         return speed;
+    }
+
+    public List<String> getTasks() {
+        return taskTypes;
     }
 }
