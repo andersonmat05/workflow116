@@ -37,7 +37,13 @@ public class FileErrorException extends Exception {
         START_TIME_INVALID(ExceptionType.SEMANTIC_ERROR, "Specified start time could not be parsed as a number."),
         DURATION_INVALID(ExceptionType.SEMANTIC_ERROR, "Specified duration could not be parsed as a number."),
         // end job
+
+        // workflow
+        SECTION_IDENTIFIER_INVALID(ExceptionType.SEMANTIC_ERROR, "Unknown section identifier."),
+        TASK_INVALID(ExceptionType.SEMANTIC_ERROR, "Task type defined incorrectly."),
         ;
+        // end workflow
+
         /** Type of the error. **/
         public final ExceptionType Type;
         /** Detailed description of the exception **/
