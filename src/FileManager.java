@@ -3,17 +3,18 @@ import java.io.FileNotFoundException;
 import java.util.*;
 
 public class FileManager {
-    public static final String REGEX_SECTION =  "[A-Z]+";
-    public static final String REGEX_TASK =     "^(T)(_)?[0-9]+$";
-    public static final String REGEX_JOB =      "^(J)(_)?[0-9]+$";
-    public static final String REGEX_STATION =  "^(S)(_)?[0-9]+$";
-    public static final String REGEX_FLAG =     "^(?:Y|N)$";
-    public static final String REGEX_FLOAT =    "^([0-9]*[.])?[0-9]+$";
+    public static final String REGEX_SECTION = "[A-Z]+";
+    public static final String REGEX_TASK = "^(T)(_)?[0-9]+$";
+    public static final String REGEX_JOB = "^(J)(_)?[0-9]+$";
+    public static final String REGEX_STATION = "^(S)(_)?[0-9]+$";
+    public static final String REGEX_FLAG = "^(?:Y|N)$";
+    public static final String REGEX_FLOAT = "^([0-9]*[.])?[0-9]+$";
 
     private static final ArrayList<FileErrorException> jobFileErrors = new ArrayList<>();
     private static final ArrayList<FileErrorException> workflowFileErrors = new ArrayList<>();
 
     private static ArrayList<TaskType> taskTypes = new ArrayList<>();
+    private static ArrayList<Station> WorkFlowstations = new ArrayList<>();
 
     // global types because fuck java
     private static WorkflowSection section;
@@ -24,6 +25,10 @@ public class FileManager {
         TASKTYPES,
         JOBTYPES,
         STATIONS
+    }
+
+    public static ArrayList<Station> getData() {
+        return WorkFlowstations;
     }
 
     private static class TaskTypeNotFoundException extends RuntimeException {
@@ -129,6 +134,7 @@ public class FileManager {
             System.out.printf("TaskType: %s, size: %s%n", taskType.type, taskType.defaultSize);
         }
 
+        WorkFlowstations = stations;
         return stations;
     }
 
@@ -138,7 +144,8 @@ public class FileManager {
      */
     private static void parseWorkflowLine(ArrayList<Object> objects, String[] lineElements,
             int lineIndex) throws FileErrorException {
-        //=System.out.println("Parsing line: " + lineIndex + " -> " + Arrays.toString(lineElements));
+        // =System.out.println("Parsing line: " + lineIndex + " -> " +
+        // Arrays.toString(lineElements));
 
         // iterate elements
         for (int i = 0; i < lineElements.length; i++) {
@@ -176,9 +183,9 @@ public class FileManager {
                         // ensure syntax
                         if (lineElements[i].trim().matches(REGEX_TASK)) {
                             // check if there is next element
-                            if (lineElements.length > i+1) {
+                            if (lineElements.length > i + 1) {
                                 // check if positive float
-                                String nextElement = lineElements[i+1].trim();
+                                String nextElement = lineElements[i + 1].trim();
                                 if (nextElement.matches(REGEX_FLOAT)) {
                                     // add to types
                                     taskTypes.add(new TaskType(lineElements[i].trim(), Float.parseFloat(nextElement)));
@@ -186,7 +193,8 @@ public class FileManager {
                                     continue;
                                 } else {
                                     if (!nextElement.matches(REGEX_SECTION) && !nextElement.matches(REGEX_TASK)) {
-                                        throw new FileErrorException(lineIndex, FileErrorException.ExceptionCause.TASK_SIZE_INVALID);
+                                        throw new FileErrorException(lineIndex,
+                                                FileErrorException.ExceptionCause.TASK_SIZE_INVALID);
                                     }
                                 }
                             }
@@ -202,10 +210,11 @@ public class FileManager {
                             ArrayList<Task> tasks = new ArrayList<>();
                             // use global here
                             taskParserIterator = i;
-                            while (lineElements.length > taskParserIterator+1) {
+                            while (lineElements.length > taskParserIterator + 1) {
                                 taskParserIterator++;
                                 // break loop if not job args
-                                if (!lineElements[taskParserIterator].trim().matches(REGEX_TASK) && !lineElements[taskParserIterator].trim().matches(REGEX_FLOAT)) {
+                                if (!lineElements[taskParserIterator].trim().matches(REGEX_TASK)
+                                        && !lineElements[taskParserIterator].trim().matches(REGEX_FLOAT)) {
                                     break;
                                 }
                                 // look for task definitions
@@ -232,24 +241,26 @@ public class FileManager {
                             boolean fifoFlag = false;
 
                             try {
-                                stationCapacity = Integer.parseInt(lineElements[i+1].trim());
+                                stationCapacity = Integer.parseInt(lineElements[i + 1].trim());
                             } catch (NumberFormatException e) {
-                                throw new FileErrorException(lineIndex, FileErrorException.ExceptionCause.STATION_CAPACITY_INVALID);
+                                throw new FileErrorException(lineIndex,
+                                        FileErrorException.ExceptionCause.STATION_CAPACITY_INVALID);
                             }
-                            if (lineElements[i+2].trim().matches(REGEX_FLAG)) {
-                                multiFlag = lineElements[i+2].trim().equalsIgnoreCase("Y");
+                            if (lineElements[i + 2].trim().matches(REGEX_FLAG)) {
+                                multiFlag = lineElements[i + 2].trim().equalsIgnoreCase("Y");
                             }
-                            if (lineElements[i+3].trim().matches(REGEX_FLAG)) {
-                                fifoFlag = lineElements[i+3].trim().equalsIgnoreCase("Y");
+                            if (lineElements[i + 3].trim().matches(REGEX_FLAG)) {
+                                fifoFlag = lineElements[i + 3].trim().equalsIgnoreCase("Y");
                             }
 
                             ArrayList<Task> tasks = new ArrayList<>();
                             // use global here
-                            taskParserIterator = i+3;
-                            while (lineElements.length > taskParserIterator+1) {
+                            taskParserIterator = i + 3;
+                            while (lineElements.length > taskParserIterator + 1) {
                                 taskParserIterator++;
                                 // break loop if not job args
-                                if (!lineElements[taskParserIterator].trim().matches(REGEX_TASK) && !lineElements[taskParserIterator].trim().matches(REGEX_FLOAT)) {
+                                if (!lineElements[taskParserIterator].trim().matches(REGEX_TASK)
+                                        && !lineElements[taskParserIterator].trim().matches(REGEX_FLOAT)) {
                                     break;
                                 }
                                 // look for task definitions
@@ -267,41 +278,44 @@ public class FileManager {
         }
     }
 
-
     /**
      * Parses a task from string, starting from index
      */
     private static Task parseTask(String[] elements, int lineIndex, boolean checkPlusMinus) throws FileErrorException {
         if (elements[taskParserIterator].trim().matches(REGEX_TASK)) {
             // check if there is next element
-            if (elements.length > taskParserIterator+1) {
+            if (elements.length > taskParserIterator + 1) {
                 // check if positive float
-                String nextElement = elements[taskParserIterator+1].trim();
+                String nextElement = elements[taskParserIterator + 1].trim();
                 if (nextElement.matches(REGEX_FLOAT)) {
                     taskParserIterator++; // size found, skip iterator to next element
 
                     // look for plus minus
                     if (checkPlusMinus) {
-                        if (elements.length > taskParserIterator+1) {
-                            String nextElement2 = elements[taskParserIterator+1].trim();
+                        if (elements.length > taskParserIterator + 1) {
+                            String nextElement2 = elements[taskParserIterator + 1].trim();
                             if (nextElement2.matches(REGEX_FLOAT)) {
                                 taskParserIterator++; // skip again
                                 try {
-                                    return new Task(findTaskTypeFromID(elements[taskParserIterator-2]), Float.parseFloat(nextElement), Float.parseFloat(nextElement2));
+                                    return new Task(findTaskTypeFromID(elements[taskParserIterator - 2]),
+                                            Float.parseFloat(nextElement), Float.parseFloat(nextElement2));
                                 } catch (TaskTypeNotFoundException e) {
-                                    throw new FileErrorException(lineIndex, FileErrorException.ExceptionCause.TASKTYPE_NOT_DEFINED);
+                                    throw new FileErrorException(lineIndex,
+                                            FileErrorException.ExceptionCause.TASKTYPE_NOT_DEFINED);
                                 }
                             }
                         }
                     }
 
                     try {
-                        return new Task(findTaskTypeFromID(elements[taskParserIterator-1]), Float.parseFloat(nextElement));
+                        return new Task(findTaskTypeFromID(elements[taskParserIterator - 1]),
+                                Float.parseFloat(nextElement));
                     } catch (TaskTypeNotFoundException e) {
                         throw new FileErrorException(lineIndex, FileErrorException.ExceptionCause.TASKTYPE_NOT_DEFINED);
                     }
                 } else {
-                    if (!nextElement.matches(REGEX_SECTION) && !nextElement.matches(REGEX_TASK) && !nextElement.matches(REGEX_JOB)) {
+                    if (!nextElement.matches(REGEX_SECTION) && !nextElement.matches(REGEX_TASK)
+                            && !nextElement.matches(REGEX_JOB)) {
                         // throw error if not end of section, task or job
                         throw new FileErrorException(lineIndex, FileErrorException.ExceptionCause.TASK_SIZE_INVALID);
                     }
@@ -344,7 +358,7 @@ public class FileManager {
         // todo: check if unique
         String jobID = args[0];
         // todo: check workflow to find definition
-        String jobTypeID = args[1];
+        JobType jobTypeID = args[1];
 
         int startTime, duration;
         // Parse start time
