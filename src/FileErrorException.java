@@ -36,6 +36,7 @@ public class FileErrorException extends Exception {
         // job
         START_TIME_INVALID(ExceptionType.SEMANTIC_ERROR, "Specified start time could not be parsed as a number."),
         DURATION_INVALID(ExceptionType.SEMANTIC_ERROR, "Specified duration could not be parsed as a number."),
+        JOBTYPE_INVALID(ExceptionType.SEMANTIC_ERROR, "Specified job type is not defined in workflow file."),
         // end job
 
         // workflow
@@ -44,13 +45,10 @@ public class FileErrorException extends Exception {
         TASK_INVALID(ExceptionType.SEMANTIC_ERROR, "Task type defined incorrectly."),
         TASK_SIZE_INVALID(ExceptionType.SEMANTIC_ERROR, "Task size is not a floating point number."),
         STATION_CAPACITY_INVALID(ExceptionType.SEMANTIC_ERROR, "Station capacity is defined incorrectly."),
-
         JOB_INVALID(ExceptionType.SEMANTIC_ERROR, "Job type defined incorrectly."),
         TASKTYPE_NOT_DEFINED(ExceptionType.SEMANTIC_ERROR, "Task type not defined."),
-
-
-        ;
         // end workflow
+        ;
 
         /** Type of the error. **/
         public final ExceptionType Type;

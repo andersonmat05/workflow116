@@ -3,18 +3,18 @@ import java.io.FileNotFoundException;
 import java.util.*;
 
 public class FileManager {
-    public static final String REGEX_SECTION = "[A-Z]+";
-    public static final String REGEX_TASK = "^(T)(_)?[0-9]+$";
-    public static final String REGEX_JOB = "^(J)(_)?[0-9]+$";
-    public static final String REGEX_STATION = "^(S)(_)?[0-9]+$";
-    public static final String REGEX_FLAG = "^(?:Y|N)$";
-    public static final String REGEX_FLOAT = "^([0-9]*[.])?[0-9]+$";
+    public static final String REGEX_SECTION =  "[A-Z]+";
+    public static final String REGEX_TASK =     "^(T)(_)?[0-9]+$";
+    public static final String REGEX_JOB =      "^(J)(_)?[0-9]+$";
+    public static final String REGEX_STATION =  "^(S)(_)?[0-9]+$";
+    public static final String REGEX_FLAG =     "^(?:Y|N)$";
+    public static final String REGEX_FLOAT =    "^([0-9]*[.])?[0-9]+$";
 
     private static final ArrayList<FileErrorException> jobFileErrors = new ArrayList<>();
     private static final ArrayList<FileErrorException> workflowFileErrors = new ArrayList<>();
 
     private static ArrayList<TaskType> taskTypes = new ArrayList<>();
-    private static ArrayList<Station> WorkFlowstations = new ArrayList<>();
+    private static ArrayList<Station> stations = new ArrayList<>();
 
     // global types because fuck java
     private static WorkflowSection section;
@@ -27,8 +27,8 @@ public class FileManager {
         STATIONS
     }
 
-    public static ArrayList<Station> getData() {
-        return WorkFlowstations;
+    public static ArrayList<Station> getStations() {
+        return stations;
     }
 
     private static class TaskTypeNotFoundException extends RuntimeException {
@@ -36,18 +36,18 @@ public class FileManager {
 
     public static void parseFiles(String workflowFile, String jobFile) {
 
-        // todo: Parse workflow file
+        ArrayList<JobType> jobTypes = new ArrayList<>();
         try {
-            parseWorkflowFile(workflowFile);
+            parseWorkflowFile(workflowFile, jobTypes);
         } catch (FileNotFoundException e) {
             System.out.println("Error reading workflow file: " + e.getMessage());
         }
 
         // Parse job file
         try {
-            ArrayList<Job> jobs = parseJobFile(jobFile);
+            ArrayList<Job> jobs = parseJobFile(jobFile, jobTypes);
             for (Job job : jobs) {
-                job.printInfo();
+                //job.printInfo();
             }
         } catch (FileNotFoundException e) {
             System.out.println("Error reading job file: " + e.getMessage());
@@ -60,13 +60,13 @@ public class FileManager {
     /**
      * Parses each line of the job file and return created job objects
      **/
-    private static ArrayList<Job> parseJobFile(String jobFile) throws FileNotFoundException {
+    private static ArrayList<Job> parseJobFile(String jobFile, ArrayList<JobType> jobTypes) throws FileNotFoundException {
         ArrayList<Job> jobs = new ArrayList<>();
         Scanner sc = new Scanner(new File(jobFile));
         int lineIndex = 0;
         while (sc.hasNextLine()) {
             try {
-                Job newJob = parseJobLine(sc.nextLine(), ++lineIndex);
+                Job newJob = parseJobLine(sc.nextLine(), jobTypes, ++lineIndex);
                 // skip line if null
                 if (newJob != null) {
                     jobs.add(newJob);
@@ -80,7 +80,7 @@ public class FileManager {
     }
 
     /** Parses workflow file and assign all objects **/
-    private static ArrayList<Station> parseWorkflowFile(String jobFile) throws FileNotFoundException {
+    private static void parseWorkflowFile(String jobFile, ArrayList<JobType> jobTypes) throws FileNotFoundException {
         ArrayList<Station> stations = new ArrayList<>();
         // file not found thrown here
         Scanner sc = new Scanner(new File(jobFile));
@@ -119,23 +119,20 @@ public class FileManager {
             if (parsedObject instanceof TaskType taskType) {
                 System.out.println("TaskType object must NOT be returned from parse func.");
             }
-            if (parsedObject instanceof Task) {
-
-            }
-            if (parsedObject instanceof Job) {
-
+            if (parsedObject instanceof JobType) {
+                jobTypes.add((JobType) parsedObject);
             }
             if (parsedObject instanceof Station station) {
-                System.out.printf("Station: %s, Tasks: %s%n", station.getStationID(), station.getTasks().toString());
+                //System.out.printf("Station: %s, Tasks: %s%n", station.getStationID(), station.getTasks().toString());
+                stations.add(station);
             }
         }
         System.out.println();
         for (TaskType taskType : taskTypes) {
-            System.out.printf("TaskType: %s, size: %s%n", taskType.type, taskType.defaultSize);
+            //System.out.printf("TaskType: %s, size: %s%n", taskType.type, taskType.defaultSize);
         }
 
-        WorkFlowstations = stations;
-        return stations;
+        FileManager.stations = stations;
     }
 
     /**
@@ -231,6 +228,7 @@ public class FileManager {
                         break;
                     case STATIONS:
                         if (lineElements[i].trim().matches(REGEX_STATION)) {
+                            //todo: Check arg types
                             if (lineElements.length < 5) {
                                 throw new FileErrorException(lineIndex, FileErrorException.ExceptionCause.ARGS_FEW);
                             }
@@ -341,7 +339,7 @@ public class FileManager {
         throw new TaskTypeNotFoundException();
     }
 
-    private static Job parseJobLine(final String jobString, final int line) throws FileErrorException {
+    private static Job parseJobLine(final String jobString, ArrayList<JobType> jobTypes, final int lineIndex) throws FileErrorException {
         // Check line is not empty
         if (jobString.isEmpty()) {
             return null;
@@ -351,40 +349,53 @@ public class FileManager {
 
         // Ensure there is 4 arguments
         if (args.length < 4) {
-            throw new FileErrorException(line, FileErrorException.ExceptionCause.ARGS_FEW);
+            throw new FileErrorException(lineIndex, FileErrorException.ExceptionCause.ARGS_FEW);
         } else if (args.length > 4) {
-            throw new FileErrorException(line, FileErrorException.ExceptionCause.ARGS_MANY);
+            throw new FileErrorException(lineIndex, FileErrorException.ExceptionCause.ARGS_MANY);
         }
         // todo: check if unique
         String jobID = args[0];
-        // todo: check workflow to find definition
-        JobType jobTypeID = args[1];
+
+        // Find matching id from types
+        JobType jobType = null;
+        String queryId = args[1]; // cache id
+        for (JobType j : jobTypes) {
+            if (j.Id.equals(queryId)) {
+                jobType = j;
+                break;
+            }
+        }
+        if (jobType == null) {
+            throw new FileErrorException(lineIndex, FileErrorException.ExceptionCause.JOBTYPE_INVALID);
+        }
 
         int startTime, duration;
         // Parse start time
         try {
             startTime = Integer.parseInt(args[2]);
         } catch (NumberFormatException e) {
-            throw new FileErrorException(line, FileErrorException.ExceptionCause.START_TIME_INVALID);
+            throw new FileErrorException(lineIndex, FileErrorException.ExceptionCause.START_TIME_INVALID);
         }
         // Parse duration
         try {
             duration = Integer.parseInt(args[3]);
         } catch (NumberFormatException e) {
-            throw new FileErrorException(line, FileErrorException.ExceptionCause.DURATION_INVALID);
+            throw new FileErrorException(lineIndex, FileErrorException.ExceptionCause.DURATION_INVALID);
         }
         // Create and return job object
-        return new Job(jobID, jobTypeID, startTime, duration);
+        return new Job(jobID, jobType, startTime, duration);
     }
 
     /** Prints all errors encountered in order. **/
     private static void reportErrors() {
         if (!jobFileErrors.isEmpty()) {
+            System.out.println("Job file errors:");
             for (FileErrorException e : jobFileErrors) {
                 System.out.println(e.getMessage());
             }
         }
         if (!workflowFileErrors.isEmpty()) {
+            System.out.println("Workflow file errors:");
             for (FileErrorException e : workflowFileErrors) {
                 System.out.println(e.getMessage());
             }

@@ -14,17 +14,16 @@ public class EventManager {
 
         boolean Track = false;
 
-        while (Track != true) {
-            stations = FileManager.getData();
+        while (!Track) {
             for (Station station : stations) {
-                if( < hours){}
+                if (0 < hours){}
                 tasks = station.getTasks();
             }
         }
 
     }
 
-    public static void getStatus(ArrayList<Station> stations) {
+    public static void getStatus() {
         for (Station station : stations) {
             System.out.println("ID of Station: " + station.getStationID());
         }

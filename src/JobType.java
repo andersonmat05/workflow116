@@ -1,19 +1,19 @@
 import java.util.ArrayList;
 
 public final class JobType {
-    public final String type;
+    public final String Id;
     public final ArrayList<Task> tasks;
 
-    public JobType(String type) {
-        this(type, new ArrayList<>());
+    public JobType(String Id) {
+        this(Id, new ArrayList<>());
     }
 
-    public JobType(String type, ArrayList<Task> tasks) throws IllegalArgumentException {
-        if (type.isEmpty()) {
+    public JobType(String Id, ArrayList<Task> tasks) throws IllegalArgumentException {
+        if (Id.isEmpty()) {
             throw new IllegalArgumentException("Type cannot be empty");
         }
 
-        this.type = type;
+        this.Id = Id;
         this.tasks = tasks;
     }
 }
