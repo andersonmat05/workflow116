@@ -17,4 +17,8 @@ public final class TaskType {
         this.type = type;
         this.defaultSize = defaultSize;
     }
+
+    public String getTaskID() {
+        return type;
+    }
 }

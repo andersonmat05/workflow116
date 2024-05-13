@@ -1,31 +1,62 @@
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Random;
 
 public class EventManager {
     public static ArrayList<Station> stations;
 
     public static void WorkFlow() {
+        ArrayList<Station> stations = FileManager.getStations();
+        Random rn = new Random(System.currentTimeMillis());
 
-        Calendar cal = Calendar.getInstance();
-        int hours = cal.get(Calendar.HOUR);
-        int minutes = cal.get(Calendar.MINUTE);
+        float plusminus; // = rn.nextFloat();
+        int plusorminus;
+        float Size;
 
-        ArrayList<Task> tasks = null;
+        // Assume float below as start time for jobs
+        float starttime = 1.0f;
 
-        boolean Track = false;
-
-        while (!Track) {
-            for (Station station : stations) {
-                if (0 < hours){}
-                tasks = station.getTasks();
-            }
-        }
-
-    }
-
-    public static void getStatus() {
         for (Station station : stations) {
-            System.out.println("ID of Station: " + station.getStationID());
+            float uppersize = 0.0f;
+            if (station.isMultiFlag() == true) {
+                for (Task task : station.getTasks()) {
+                    System.out.print("StationID: " + station.getStationID() + "  ");
+
+                    if (task.plusMinus != 0) {
+                        plusorminus = rn.nextInt(2);
+                        // change plusminus's bound according to report
+                        plusminus = rn.nextFloat(task.plusMinus);
+
+                        if (plusorminus == 2) {
+                            plusminus = -plusminus;
+                        }
+
+                        Size = task.getSize() + (task.getSize() * plusminus) / 100;
+                    } else {
+                        Size = task.getSize();
+                    }
+                    System.out.println("TaskID: " + task.getID() + " ends at: " + (starttime + Size));
+                }
+            } else {
+                for (Task task : station.getTasks()) {
+                    System.out.print("StationID: " + station.getStationID() + "  ");
+
+                    if (task.plusMinus != 0) {
+                        plusorminus = rn.nextInt(2);
+                        // change plusminus's bound according to report
+                        plusminus = rn.nextFloat(task.plusMinus);
+
+                        if (plusorminus == 2) {
+                            plusminus = -plusminus;
+                        }
+
+                        Size = task.getSize() + (task.getSize() * plusminus) / 100 + uppersize;
+                    } else {
+                        Size = task.getSize() + uppersize;
+                    }
+                    uppersize = Size;
+                    System.out.println("TaskID: " + task.getID() + " ends at: " + (starttime + Size));
+                }
+            }
         }
     }
 }

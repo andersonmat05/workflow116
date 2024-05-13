@@ -27,5 +27,7 @@ public class Station {
         return tasks;
     }
 
-    public boolean isMultiFlag() { return multiFlag; }
+    public boolean isMultiFlag() {
+        return multiFlag;
+    }
 }

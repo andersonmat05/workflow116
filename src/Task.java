@@ -28,4 +28,12 @@ public final class Task {
                 ", plusMinus=" + plusMinus +
                 '}';
     }
+
+    public float getSize() {
+        return size;
+    }
+
+    public String getID() {
+        return taskType.getTaskID();
+    }
 }

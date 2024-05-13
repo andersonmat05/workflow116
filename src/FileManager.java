@@ -3,12 +3,12 @@ import java.io.FileNotFoundException;
 import java.util.*;
 
 public class FileManager {
-    public static final String REGEX_SECTION =  "[A-Z]+";
-    public static final String REGEX_TASK =     "^(T)(_)?[0-9]+$";
-    public static final String REGEX_JOB =      "^(J)(_)?[0-9]+$";
-    public static final String REGEX_STATION =  "^(S)(_)?[0-9]+$";
-    public static final String REGEX_FLAG =     "^(?:Y|N)$";
-    public static final String REGEX_FLOAT =    "^([0-9]*[.])?[0-9]+$";
+    public static final String REGEX_SECTION = "[A-Z]+";
+    public static final String REGEX_TASK = "^(T)(_)?[0-9]+$";
+    public static final String REGEX_JOB = "^(J)(_)?[0-9]+$";
+    public static final String REGEX_STATION = "^(S)(_)?[0-9]+$";
+    public static final String REGEX_FLAG = "^(?:Y|N)$";
+    public static final String REGEX_FLOAT = "^([0-9]*[.])?[0-9]+$";
 
     private static final ArrayList<FileErrorException> jobFileErrors = new ArrayList<>();
     private static final ArrayList<FileErrorException> workflowFileErrors = new ArrayList<>();
@@ -31,6 +31,8 @@ public class FileManager {
         return stations;
     }
 
+    // private static ArrayList<Job> Jobs = new ArrayList<>();
+    // public static ArrayList<Job> getJobs(){return Jobs;}
     private static class TaskTypeNotFoundException extends RuntimeException {
     }
 
@@ -47,7 +49,7 @@ public class FileManager {
         try {
             ArrayList<Job> jobs = parseJobFile(jobFile, jobTypes);
             for (Job job : jobs) {
-                //job.printInfo();
+                // job.printInfo();
             }
         } catch (FileNotFoundException e) {
             System.out.println("Error reading job file: " + e.getMessage());
@@ -60,7 +62,8 @@ public class FileManager {
     /**
      * Parses each line of the job file and return created job objects
      **/
-    private static ArrayList<Job> parseJobFile(String jobFile, ArrayList<JobType> jobTypes) throws FileNotFoundException {
+    private static ArrayList<Job> parseJobFile(String jobFile, ArrayList<JobType> jobTypes)
+            throws FileNotFoundException {
         ArrayList<Job> jobs = new ArrayList<>();
         Scanner sc = new Scanner(new File(jobFile));
         int lineIndex = 0;
@@ -76,6 +79,7 @@ public class FileManager {
             }
         }
         sc.close();
+        // Jobs = jobs;
         return jobs;
     }
 
@@ -123,13 +127,15 @@ public class FileManager {
                 jobTypes.add((JobType) parsedObject);
             }
             if (parsedObject instanceof Station station) {
-                //System.out.printf("Station: %s, Tasks: %s%n", station.getStationID(), station.getTasks().toString());
+                // System.out.printf("Station: %s, Tasks: %s%n", station.getStationID(),
+                // station.getTasks().toString());
                 stations.add(station);
             }
         }
         System.out.println();
         for (TaskType taskType : taskTypes) {
-            //System.out.printf("TaskType: %s, size: %s%n", taskType.type, taskType.defaultSize);
+            // System.out.printf("TaskType: %s, size: %s%n", taskType.type,
+            // taskType.defaultSize);
         }
 
         FileManager.stations = stations;
@@ -228,7 +234,7 @@ public class FileManager {
                         break;
                     case STATIONS:
                         if (lineElements[i].trim().matches(REGEX_STATION)) {
-                            //todo: Check arg types
+                            // todo: Check arg types
                             if (lineElements.length < 5) {
                                 throw new FileErrorException(lineIndex, FileErrorException.ExceptionCause.ARGS_FEW);
                             }
@@ -339,7 +345,8 @@ public class FileManager {
         throw new TaskTypeNotFoundException();
     }
 
-    private static Job parseJobLine(final String jobString, ArrayList<JobType> jobTypes, final int lineIndex) throws FileErrorException {
+    private static Job parseJobLine(final String jobString, ArrayList<JobType> jobTypes, final int lineIndex)
+            throws FileErrorException {
         // Check line is not empty
         if (jobString.isEmpty()) {
             return null;
