@@ -5,7 +5,9 @@ public class Station {
     private final int capacity;
     private final boolean multiFlag;
     private final boolean fifoFlag;
-    private ArrayList<Task> tasks;
+    private final ArrayList<Task> tasks;
+
+    private ArrayList<Task> tasksInExecution = new ArrayList<>();
 
     public Station(String stationID, int capacity, boolean multiFlag, boolean fifoFlag, ArrayList<Task> tasks) {
         this.stationID = stationID;
@@ -44,5 +46,19 @@ public class Station {
 
     public boolean isFifoFlag() {
         return fifoFlag;
+    }
+
+    public ArrayList<Task> getTasksInExecution() {
+        return tasksInExecution;
+    }
+
+    public boolean executeTask(Task task) {
+        if (tasks.contains(task)) {
+            tasksInExecution.add(task);
+            return true;
+        } else {
+            System.out.println("This task is not assigned to this station");
+            return false;
+        }
     }
 }

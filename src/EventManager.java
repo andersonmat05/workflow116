@@ -7,7 +7,11 @@ public class EventManager {
     private static ArrayList<EventInterface> eventQueue = new ArrayList<EventInterface>();
 
     public static void Init(Set<Station> stations) {
-
+        eventQueue.clear();
+        eventQueue.add(new NullEvent(0.f));
+        eventQueue.add(new NullEvent(1.f));
+        eventQueue.add(new NullEvent(2.f));
+        eventQueue.add(new NullEvent(3.f));
     }
 
     private static void InitStation(Station station) {
@@ -32,6 +36,10 @@ public class EventManager {
         EventInterface event = nextEvent();
         event.execute();
         eventQueue.removeFirst();
+    }
+
+    public static void removeEvent(EventInterface event) {
+        eventQueue.remove(event);
     }
 
     public static ArrayList<EventInterface> getEventQueue() {

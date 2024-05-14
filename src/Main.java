@@ -10,20 +10,20 @@ public class Main {
         for (Station s : FileManager.getStations()) {
             System.out.println(s.toString());
         }
-        /*
+
         EventManager.Init(FileManager.getStations());
 
         Scanner sc = new Scanner(System.in);
         while (EventManager.hasNextEvent()) {
             EventInterface event = EventManager.nextEvent();
+            event.execute();
             event.report();
+            System.out.println("Events remaining: " + EventManager.getEventQueue().toArray().length);
             System.out.println("\nEnter anything to continue.. ");
             sc.next();
-            EventManager.executeNextEvent();
+            EventManager.removeEvent(event);
         }
 
         System.out.println("Execution finished");
-
-         */
     }
 }
