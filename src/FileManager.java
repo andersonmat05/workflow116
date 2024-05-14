@@ -1,13 +1,16 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class FileManager {
-    public static final String REGEX_SECTION = "[A-Z]+";
+
+    // Regex
+    public static final String REGEX_SECTION = "^[A-Z]+$";
     public static final String REGEX_TASK = "^(T)(_)?[0-9]+$";
     public static final String REGEX_JOB = "^(J)(_)?[0-9]+$";
     public static final String REGEX_STATION = "^(S)(_)?[0-9]+$";
-    public static final String REGEX_FLAG = "^(?:Y|N)$";
+    public static final String REGEX_FLAG = "^[YN]$";
     public static final String REGEX_FLOAT = "^([0-9]*[.])?[0-9]+$";
 
     private static final ArrayList<FileErrorException> jobFileErrors = new ArrayList<>();
@@ -16,9 +19,8 @@ public class FileManager {
     private static ArrayList<TaskType> taskTypes = new ArrayList<>();
     private static ArrayList<Station> stations = new ArrayList<>();
 
-    // global types because fuck java
-    private static WorkflowSection section;
-    private static int taskParserIterator;
+    private static WorkflowSection currentSection;
+    private static int taskParserIterator; // used global field instead of defining mutable class just for one function
 
     private enum WorkflowSection {
         INVALID_SECTION,
@@ -36,6 +38,7 @@ public class FileManager {
     private static class TaskTypeNotFoundException extends RuntimeException {
     }
 
+    /** Parses both files and handles assignments, then reports errors */
     public static void parseFiles(String workflowFile, String jobFile) {
 
         ArrayList<JobType> jobTypes = new ArrayList<>();
@@ -48,9 +51,6 @@ public class FileManager {
         // Parse job file
         try {
             ArrayList<Job> jobs = parseJobFile(jobFile, jobTypes);
-            for (Job job : jobs) {
-                // job.printInfo();
-            }
         } catch (FileNotFoundException e) {
             System.out.println("Error reading job file: " + e.getMessage());
         }
@@ -92,7 +92,7 @@ public class FileManager {
 
         // objects extracted from the file
         ArrayList<Object> parsedObjects = new ArrayList<>();
-        section = WorkflowSection.INVALID_SECTION;
+        currentSection = WorkflowSection.INVALID_SECTION;
 
         // populate section map by indexing file contents
         while (sc.hasNextLine()) {
@@ -163,12 +163,12 @@ public class FileManager {
                     }
 
                     // ensure TASKTYPES is the first section in the file
-                    if (section == WorkflowSection.INVALID_SECTION && newSection != WorkflowSection.TASKTYPES) {
+                    if (currentSection == WorkflowSection.INVALID_SECTION && newSection != WorkflowSection.TASKTYPES) {
                         throw new FileErrorException(lineIndex, FileErrorException.ExceptionCause.TASKTYPES_NOT_FIRST);
                     }
 
                     // Assign new section
-                    section = newSection;
+                    currentSection = newSection;
                 } catch (IllegalArgumentException e) {
                     // enum conversion failed
                     throw new FileErrorException(lineIndex,
@@ -176,12 +176,12 @@ public class FileManager {
                 }
             } else {
                 // ensure current section
-                if (section == WorkflowSection.INVALID_SECTION) {
+                if (currentSection == WorkflowSection.INVALID_SECTION) {
                     // something gone wrong, abort func
                     return;
                 }
 
-                switch (section) {
+                switch (currentSection) {
                     case TASKTYPES:
                         // ensure syntax
                         if (lineElements[i].trim().matches(REGEX_TASK)) {
@@ -393,7 +393,7 @@ public class FileManager {
         return new Job(jobID, jobType, startTime, duration);
     }
 
-    /** Prints all errors encountered in order. **/
+    /** Prints all errors encountered in order */
     private static void reportErrors() {
         if (!jobFileErrors.isEmpty()) {
             System.out.println("Job file errors:");

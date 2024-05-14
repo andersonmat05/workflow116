@@ -6,9 +6,10 @@ public class EventManager {
 
     public static void WorkFlow() {
         ArrayList<Station> stations = FileManager.getStations();
+        // todo: inspect if seed is working properly
         Random rn = new Random(System.currentTimeMillis());
 
-        float plusminus; // = rn.nextFloat();
+        float plusMinus; // = rn.nextFloat();
         int plusorminus;
         float Size;
 
@@ -23,14 +24,14 @@ public class EventManager {
 
                     if (task.plusMinus != 0) {
                         plusorminus = rn.nextInt(2);
-                        // change plusminus's bound according to report
-                        plusminus = rn.nextFloat(task.plusMinus);
+                        // change plusMinus's bound according to report
+                        plusMinus = rn.nextFloat(task.plusMinus);
 
                         if (plusorminus == 2) {
-                            plusminus = -plusminus;
+                            plusMinus = -plusMinus;
                         }
 
-                        Size = task.getSize() + (task.getSize() * plusminus) / 100;
+                        Size = task.getSize() + (task.getSize() * plusMinus) / 100;
                     } else {
                         Size = task.getSize();
                     }
@@ -42,14 +43,14 @@ public class EventManager {
 
                     if (task.plusMinus != 0) {
                         plusorminus = rn.nextInt(2);
-                        // change plusminus's bound according to report
-                        plusminus = rn.nextFloat(task.plusMinus);
+                        // change plusMinus's bound according to report
+                        plusMinus = rn.nextFloat(task.plusMinus);
 
                         if (plusorminus == 2) {
-                            plusminus = -plusminus;
+                            plusMinus = -plusMinus;
                         }
 
-                        Size = task.getSize() + (task.getSize() * plusminus) / 100 + uppersize;
+                        Size = task.getSize() + (task.getSize() * plusMinus) / 100 + uppersize;
                     } else {
                         Size = task.getSize() + uppersize;
                     }
