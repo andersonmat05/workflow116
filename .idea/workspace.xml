@@ -5,10 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="32f335e1-3ce8-409f-a022-3704abdea5dc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/EventInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EventInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/EventInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/EventManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/EventManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FileManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/JobType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/JobType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Station.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Station.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Task.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TaskType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TaskType.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,6 +109,7 @@
       <workItem from="1715682362210" duration="967000" />
       <workItem from="1715689214124" duration="221000" />
       <workItem from="1715689455693" duration="695000" />
+      <workItem from="1715708977310" duration="7963000" />
     </task>
     <servers />
   </component>

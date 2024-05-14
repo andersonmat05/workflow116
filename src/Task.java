@@ -1,7 +1,9 @@
+import java.util.Random;
+
 public final class Task {
+    // Params
     public final TaskType taskType;
     public final float size;
-    public final float plusMinus;
 
     // Use default size
     public Task(TaskType taskType) {
@@ -16,16 +18,23 @@ public final class Task {
     // Full constructor
     public Task(TaskType taskType, float size, float plusMinus) {
         this.taskType = taskType;
-        this.size = size;
-        this.plusMinus = plusMinus;
+
+        if (plusMinus != 0) {
+            Random rand = new Random(System.currentTimeMillis());
+            plusMinus = rand.nextFloat(plusMinus);
+            plusMinus *= rand.nextBoolean() ? 1.0f : -1.0f;
+            this.size = size + plusMinus;
+        } else {
+            this.size = size;
+        }
+
     }
 
     @Override
     public String toString() {
         return "Task{" +
-                "taskType=" + taskType.type +
+                "taskType=" + taskType.toString() +
                 ", size=" + size +
-                ", plusMinus=" + plusMinus +
                 '}';
     }
 
@@ -34,6 +43,7 @@ public final class Task {
     }
 
     public String getID() {
-        return taskType.getTaskID();
+        return taskType.getTaskId();
     }
+
 }

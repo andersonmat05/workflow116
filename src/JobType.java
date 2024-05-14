@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public final class JobType {
     public final String Id;
-    public final ArrayList<Task> tasks;
+    private final ArrayList<Task> tasks;
 
     public JobType(String Id) {
         this(Id, new ArrayList<>());
@@ -15,5 +15,17 @@ public final class JobType {
 
         this.Id = Id;
         this.tasks = tasks;
+    }
+
+    @Override
+    public String toString() {
+        return "JobType{" +
+                "Id='" + Id + '\'' +
+                ", tasks=" + tasks +
+                '}';
+    }
+
+    public ArrayList<Task> getTasks() {
+        return tasks;
     }
 }

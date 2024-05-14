@@ -15,6 +15,17 @@ public class Station {
         this.tasks = tasks;
     }
 
+    @Override
+    public String toString() {
+        return "Station{" +
+                "stationID='" + stationID + '\'' +
+                ", capacity=" + capacity +
+                ", multiFlag=" + multiFlag +
+                ", fifoFlag=" + fifoFlag +
+                ", tasks=" + tasks.toString() +
+                '}';
+    }
+
     public String getStationID() {
         return stationID;
     }
@@ -29,5 +40,9 @@ public class Station {
 
     public boolean isMultiFlag() {
         return multiFlag;
+    }
+
+    public boolean isFifoFlag() {
+        return fifoFlag;
     }
 }
