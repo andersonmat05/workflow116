@@ -11,14 +11,29 @@ public class Job {
         this.duration = duration;
     }
 
-    public void printInfo() {
-        System.out.print("Job ID: " + jobID);
-        System.out.print("  Job Type ID: " + jobType.Id);
-        System.out.print("  Job Start Time: " + startTime);
-        System.out.println("  Job Duration: " + duration);
+    @Override
+    public String toString() {
+        return "Job{" +
+                "jobID='" + jobID + '\'' +
+                ", jobType=" + jobType +
+                ", startTime=" + startTime +
+                ", duration=" + duration +
+                '}';
     }
 
     public int getStartTime() {
         return startTime;
+    }
+
+    public int getEndTime() {
+        return startTime + duration;
+    }
+
+    public String getJobID() {
+        return jobID;
+    }
+
+    public JobType getJobType() {
+        return jobType;
     }
 }

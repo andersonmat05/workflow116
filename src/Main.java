@@ -7,17 +7,13 @@ public class Main {
             // End program if there were errors.
             return;
         }
-        for (Station s : FileManager.getStations()) {
-            System.out.println(s.toString());
-        }
 
-        EventManager.Init(FileManager.getStations());
+        EventManager.Init(FileManager.getStations(), FileManager.getJobs());
 
         Scanner sc = new Scanner(System.in);
         while (EventManager.hasNextEvent()) {
-            EventInterface event = EventManager.nextEvent();
+            EventBase event = EventManager.nextEvent();
             event.execute();
-            event.report();
             System.out.println("Events remaining: " + EventManager.getEventQueue().toArray().length);
             System.out.println("\nEnter anything to continue.. ");
             sc.next();

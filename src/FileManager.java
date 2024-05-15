@@ -18,9 +18,10 @@ public class FileManager {
     private static final ArrayList<FileErrorException> jobFileErrors = new ArrayList<>();
     private static final ArrayList<FileErrorException> workflowFileErrors = new ArrayList<>();
 
-    private static Set<TaskType> taskTypes = new HashSet<>();
-    private static Set<JobType> jobTypes = new HashSet<>();
-    private static Set<Station> stations = new HashSet<>();
+    private static final Set<TaskType> taskTypes = new HashSet<>();
+    private static final Set<JobType> jobTypes = new HashSet<>();
+    private static final Set<Station> stations = new HashSet<>();
+    private static final Set<Job> jobs = new HashSet<>();
 
     private static WorkflowSection currentSection;
     private static int taskParserIterator; // used global field instead of defining mutable class just for one function
@@ -44,6 +45,10 @@ public class FileManager {
         return stations;
     }
 
+    public static Set<Job> getJobs() {
+        return jobs;
+    }
+
     // private static ArrayList<Job> Jobs = new ArrayList<>();
     // public static ArrayList<Job> getJobs(){return Jobs;}
     private static class TaskTypeNotFoundException extends RuntimeException {
@@ -60,7 +65,8 @@ public class FileManager {
 
         // Parse job file
         try {
-            ArrayList<Job> jobs = parseJobFile(jobFile);
+            jobs.clear();
+            jobs.addAll(parseJobFile(jobFile));
         } catch (FileNotFoundException e) {
             System.out.println("Error reading job file: " + e.getMessage());
         }
