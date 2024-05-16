@@ -131,13 +131,13 @@ public class FileManager {
                 // quick fix for not having abstract parent for our objects
                 assert parsedObjects != null;
                 for (Object parsedObject : parsedObjects) {
-                    if (parsedObject instanceof TaskType taskType) {
+                    if (parsedObject instanceof final TaskType taskType) {
                         taskTypes.add(taskType);
                     }
-                    if (parsedObject instanceof JobType jobType) {
+                    if (parsedObject instanceof final JobType jobType) {
                         jobTypes.add(jobType);
                     }
-                    if (parsedObject instanceof Station station) {
+                    if (parsedObject instanceof final Station station) {
                         stations.add(station);
                     }
                 }
