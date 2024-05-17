@@ -1,10 +1,10 @@
 public class Job {
     private final String jobID;
     private final JobType jobType;
-    private final int startTime;
-    private final int duration;
+    private final float startTime;
+    private final float duration;
 
-    public Job(String jobID, JobType jobType, int startTime, int duration) {
+    public Job(String jobID, JobType jobType, float startTime, float duration) {
         this.jobID = jobID;
         this.jobType = jobType;
         this.startTime = startTime;
@@ -21,12 +21,12 @@ public class Job {
                 '}';
     }
 
-    public int getStartTime() {
+    public float getStartTime() {
         return startTime;
     }
 
-    public int getEndTime() {
-        return startTime + duration;
+    public float getDuration() {
+        return duration;
     }
 
     public String getJobID() {
@@ -35,5 +35,14 @@ public class Job {
 
     public JobType getJobType() {
         return jobType;
+    }
+
+    public float getTotalTaskSize() {
+        float totalTaskSize = 0;
+        for (Task task : jobType.getTasks())
+        {
+            totalTaskSize += task.getSize();
+        }
+        return totalTaskSize;
     }
 }

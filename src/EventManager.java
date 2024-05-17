@@ -11,6 +11,8 @@ public class EventManager {
             // Add all assigned tasks to queue
             station.getTasksInQueue().clear();
             station.getTasksInExecution().clear();
+
+            //todo: move tasks one by one in while to check whether assignment is done or not
             station.getTasksInQueue().addAll(station.getTasks());
 
             // loop through tasks until station is done
@@ -20,10 +22,13 @@ public class EventManager {
                 if (station.isIdle()) {
                     while (station.getFreeCapacity() > 0) {
                         Task newTask = station.getTasksInQueue().getFirst();
-                        if (newTask != null && FindJobFromTask(jobs, newTask) != null) {
+                        Job taskJob = FindJobFromTask(jobs, newTask);
+                        if (newTask != null && taskJob != null) {
                             // create start and end events for the task
-                            AddEvent(new EventStationBeginTask(FindJobFromTask(jobs, newTask).getStartTime(), station, newTask));
-                            AddEvent(new EventStationEndTask(FindJobFromTask(jobs, newTask).getEndTime(), station, newTask));
+                            AddEvent(new EventStationBeginTask(taskJob.getStartTime(), station, newTask));
+                            // calculate duration from task size and job duration
+                            final float endTime = (taskJob.getDuration()/taskJob.getTotalTaskSize())*newTask.getSize() + taskJob.getStartTime();
+                            AddEvent(new EventStationEndTask(endTime, station, newTask));
                         } else {
                             System.out.println("new task or findjobfromtask failed");
                         }
