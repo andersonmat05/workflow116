@@ -1,10 +1,11 @@
-import java.util.Scanner;
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
 
         if (!FileManager.parseFiles("workflow.txt", "job.txt")) {
             // End program if there were errors.
+            System.out.println("\nAborting execution.");
             return;
         }
 
@@ -16,9 +17,9 @@ public class Main {
             for (Station s : FileManager.getStations()) {
                 System.out.println(s.getStatus());
             }
-            System.out.println("Events remaining: " + EventManager.getEventQueue().toArray().length);
+            System.out.println("Events remaining: " + Arrays.toString(EventManager.getEventQueue().toArray()));
         }
 
-        System.out.println("Execution finished");
+        System.out.println("\nExecution finished.");
     }
 }

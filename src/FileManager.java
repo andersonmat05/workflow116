@@ -348,7 +348,7 @@ public class FileManager {
 
     private static TaskType findTaskTypeFromID(String taskID) throws TaskTypeNotFoundException {
         for (TaskType taskType : taskTypes) {
-            if (taskType.taskTypeId.equals(taskID)) {
+            if (taskType.Id.equals(taskID)) {
                 return taskType;
             }
         }
@@ -408,16 +408,19 @@ public class FileManager {
         boolean bIsErrorFree = true;
         if (!jobFileErrors.isEmpty()) {
             bIsErrorFree = false;
-            System.out.println("Job file errors:");
+            System.out.printf("Job file errors (%d)\n", jobFileErrors.size());
             for (FileErrorException e : jobFileErrors) {
-                System.out.println(e.getMessage());
+                System.out.println("  " + e.getMessage());
             }
         }
         if (!workflowFileErrors.isEmpty()) {
+            // leave a blank line if there were errors in job file
+            if (!bIsErrorFree)
+                System.out.println();
             bIsErrorFree = false;
-            System.out.println("Workflow file errors:");
+            System.out.printf("Workflow file errors (%s)\n", workflowFileErrors.size());
             for (FileErrorException e : workflowFileErrors) {
-                System.out.println(e.getMessage());
+                System.out.println("  " + e.getMessage());
             }
         }
         return bIsErrorFree;

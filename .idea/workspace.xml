@@ -7,9 +7,14 @@
     <list default="true" id="32f335e1-3ce8-409f-a022-3704abdea5dc" name="Changes" comment="Event execution chain">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/EventManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/EventManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EventStationBeginTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/EventStationBeginTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EventStationEndTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/EventStationEndTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FileManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Settings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Settings.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Station.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Station.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TaskType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TaskType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/workflow.txt" beforeDir="false" afterPath="$PROJECT_DIR$/workflow.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,7 +120,8 @@
       <workItem from="1715930217748" duration="1178000" />
       <workItem from="1715944614953" duration="268000" />
       <workItem from="1715944899599" duration="131000" />
-      <workItem from="1716027591345" duration="9090000" />
+      <workItem from="1716027591345" duration="9384000" />
+      <workItem from="1716050839165" duration="5632000" />
     </task>
     <task id="LOCAL-00001" summary="Calculate task end time">
       <option name="closed" value="true" />

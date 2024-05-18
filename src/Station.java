@@ -30,10 +30,10 @@ public class Station {
     }
 
     public String getStatus() {
-        return String.format("STATION %s - Queue: %s  Execution: %s", getStationID(), getTasksInQueue().toString(), getTasksInExecution().toString());
+        return String.format("STATION %s - Queue: %s  Execution: %s", getID(), getTasksInQueue().toString(), getTasksInExecution().toString());
     }
 
-    public String getStationID() {
+    public String getID() {
         return stationID;
     }
 
@@ -75,7 +75,7 @@ public class Station {
             }
         }
         if (Settings.DEBUG)
-            System.out.println("STATION " + getStationID() + " has no more tasks");
+            System.out.println("STATION " + getID() + " has no more tasks");
         return null;
     }
 
@@ -107,7 +107,8 @@ public class Station {
             tasksInQueue.remove(task);
             return true;
         } else {
-            System.out.println("This task is not assigned to this station");
+            if(Settings.DEBUG)
+                System.out.println("This task is not assigned to this station");
             return false;
         }
     }
@@ -118,7 +119,8 @@ public class Station {
             tasksInExecution.remove(task);
             return true;
         } else {
-            System.out.println("This task is not assigned to this station");
+            if(Settings.DEBUG)
+                System.out.println("This task is not assigned to this station");
             return false;
         }
     }

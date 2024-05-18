@@ -14,6 +14,10 @@ public class EventManager {
         return Time;
     }
 
+    public static boolean getIsInitialized() {
+        return IsInitialized;
+    }
+
     /** Set up critical data for the manager and assign initial tasks to stations. */
     public static void Init(Set<Station> stations, Set<Job> InJobs) {
         IsInitialized = true;
@@ -33,33 +37,32 @@ public class EventManager {
         Collections.sort(eventQueue);
     }
 
-    public static boolean getIsInitialized() {
-        return IsInitialized;
-    }
-
     public static void AssignTasks(Station station) {
         // loop until capacity is full or there is no more unassigned task
         while (station.getTasksInQueue().toArray().length <= station.getCapacity()
                 && station.getTasks().toArray().length > 0) {
 
             // grab the next task
-            Task newTask = station.getNextTask();
-            Job taskJob = FindJobFromTask(newTask);
+            Task task = station.getNextTask();
+            Job taskJob = FindJobFromTask(task);
 
-            if (newTask != null && taskJob != null) {
+            if (task != null && taskJob != null) {
                 // move new task to queue from task list
-                station.getTasksInQueue().add(newTask);
-                station.getTasks().remove(newTask);
+                station.getTasksInQueue().add(task);
+                station.getTasks().remove(task);
 
                 // calculate duration from task size and job duration
-                final float startTime = Math.min(taskJob.getStartTime(), getTime()); // start immediately or wait until job starts
-                final float endTime = startTime + newTask.getSize();
+                final float startTime = Math.max(taskJob.getStartTime(), getTime()); // start immediately or wait until job starts
+                final float endTime = startTime + task.getSize();
 
                 // create start and end events for the task
-                AddEvent(new EventStationBeginTask(taskJob.getStartTime(), station, newTask));
-                AddEvent(new EventStationEndTask(endTime, station, newTask));
+                AddEvent(new EventStationBeginTask(taskJob.getStartTime(), station, task));
+                AddEvent(new EventStationEndTask(endTime, station, task));
+
+                System.out.printf("[%s] Task %s assigned to %s, start: %f end: %f\n", EventManager.class.getName(), task.getID(), station.getID(), startTime, endTime);
             }
         }
+        System.out.println(station);
     }
 
     public static void OnStationBeginTask(EventStationBeginTask event) {
@@ -72,9 +75,6 @@ public class EventManager {
     }
 
     public static void AddEvent(EventBase event) {
-        if (Settings.DEBUG)
-            System.out.println("New event: " + event.toString());
-
         eventQueue.add(event);
     }
 
@@ -87,7 +87,7 @@ public class EventManager {
 
         for (Job job : jobs) {
             for (Task jobTask : job.getJobType().getTasks()) {
-                if (jobTask.taskType.getTaskId().equals(task.taskType.taskTypeId)) {
+                if (jobTask.taskType.getTaskId().equals(task.taskType.Id)) {
                     return job;
                 }
             }
@@ -112,8 +112,6 @@ public class EventManager {
         return null;
     }
 
-    public static ArrayList<Station> stations;
-
     public static boolean hasNextEvent() {
         if (!getIsInitialized()) return false;
         return !eventQueue.isEmpty();
@@ -125,8 +123,9 @@ public class EventManager {
 
     public static void executeNextEvent() {
         EventBase event = nextEvent();
+        removeEvent(event);
         event.execute();
-        eventQueue.removeFirst();
+
     }
 
     public static void removeEvent(EventBase event) {

@@ -15,7 +15,7 @@ public class EventStationEndTask extends EventBase {
     @Override
     public String toString() {
         return "EventStationEndTask{" +
-                "station=" + station.getStationID() +
+                "station=" + station.getID() +
                 ", task=" + task.getID() +
                 ", time=" + time +
                 '}';
