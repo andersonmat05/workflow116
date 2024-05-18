@@ -238,9 +238,9 @@ public class FileManager {
                             }
 
                             String stationId = lineElements[i].trim();
-                            int stationCapacity = -1;
-                            boolean multiFlag = false;
-                            boolean fifoFlag = false;
+                            int stationCapacity;
+                            boolean multiFlag;
+                            boolean fifoFlag;
 
                             try {
                                 stationCapacity = Integer.parseInt(lineElements[i + 1].trim());

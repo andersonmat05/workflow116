@@ -36,13 +36,4 @@ public class Job {
     public JobType getJobType() {
         return jobType;
     }
-
-    public float getTotalTaskSize() {
-        float totalTaskSize = 0;
-        for (Task task : jobType.getTasks())
-        {
-            totalTaskSize += task.getSize();
-        }
-        return totalTaskSize;
-    }
 }

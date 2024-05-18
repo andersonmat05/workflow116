@@ -30,7 +30,9 @@ public class Station {
     }
 
     public String getStatus() {
-        return String.format("STATION %s - Queue: %s  Execution: %s", getID(), getTasksInQueue().toString(), getTasksInExecution().toString());
+        // select status
+        String status = getTasksInExecution().isEmpty() ? getTasksInQueue().isEmpty() ? "Done" : "Idle" : "Busy";
+        return String.format("STATION %s [%s] - Queue: %s  Execution: %s", getID(), status, getTasksInQueue().toString(), getTasksInExecution().toString());
     }
 
     public String getID() {
@@ -87,41 +89,24 @@ public class Station {
         return tasksInQueue;
     }
 
-    public boolean isIdle() {
-        return tasksInExecution.isEmpty();
-    }
-
-    public boolean isDone() {
-        return tasksInQueue.isEmpty() && tasksInExecution.isEmpty();
-    }
-
-    public int getFreeCapacity() {
-        System.out.println(capacity - tasksInExecution.size());
-        return capacity - tasksInExecution.size();
-    }
-
     // move task from queue to execution
-    public boolean beginExecuteTask(Task task) {
+    public void beginExecuteTask(Task task) {
         if (tasksInQueue.contains(task)) {
             tasksInExecution.add(task);
             tasksInQueue.remove(task);
-            return true;
         } else {
             if(Settings.DEBUG)
                 System.out.println("This task is not assigned to this station");
-            return false;
         }
     }
 
     // remove task from execution
-    public boolean endExecuteTask(Task task) {
+    public void endExecuteTask(Task task) {
         if (tasksInExecution.contains(task)) {
             tasksInExecution.remove(task);
-            return true;
         } else {
             if(Settings.DEBUG)
                 System.out.println("This task is not assigned to this station");
-            return false;
         }
     }
 }

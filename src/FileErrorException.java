@@ -23,7 +23,7 @@ public class FileErrorException extends Exception {
         /** Display name of the error type. **/
         public final String text;
 
-        private ExceptionType(String text) {
+        ExceptionType(String text) {
             this.text = text;
         }
     }
@@ -58,7 +58,7 @@ public class FileErrorException extends Exception {
         /** Detailed description of the exception **/
         public final String Message;
 
-        private ExceptionCause(ExceptionType Name, String Message) {
+        ExceptionCause(ExceptionType Name, String Message) {
             this.Type = Name;
             this.Message = Message;
         }
