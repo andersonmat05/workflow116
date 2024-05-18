@@ -45,12 +45,38 @@ public class Station {
         return tasks;
     }
 
-    public boolean isMultiFlag() {
-        return multiFlag;
-    }
+    public Task getNextTask() {
+        if (!tasks.isEmpty()) {
+            if (fifoFlag)
+            {
+                // first in first out
+                return tasks.getFirst();
+            }
+            else {
+                Task nextTask = tasks.getFirst();
+                for (Task task : tasks) {
+                    if (task == nextTask) {
+                        //skip comparison if same reference
+                        continue;
+                    }
 
-    public boolean isFifoFlag() {
-        return fifoFlag;
+                    Job taskJob = EventManager.FindJobFromTask(task);
+                    Job nextTaskJob = EventManager.FindJobFromTask(nextTask);
+                    if (taskJob == null || nextTaskJob == null) {
+                        continue;
+                    }
+
+                    // compare deadline
+                    if (taskJob.getStartTime() + taskJob.getDuration() < nextTaskJob.getStartTime() + nextTaskJob.getDuration()) {
+                        nextTask = task;
+                    }
+                }
+                return nextTask;
+            }
+        }
+        if (Settings.DEBUG)
+            System.out.println("STATION " + getStationID() + " has no more tasks");
+        return null;
     }
 
     public ArrayList<Task> getTasksInExecution() {
