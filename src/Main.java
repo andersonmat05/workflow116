@@ -11,12 +11,18 @@ public class Main {
         EventManager.Init(FileManager.getStations(), FileManager.getJobs());
 
         Scanner sc = new Scanner(System.in);
+        for (Station s : FileManager.getStations()) {
+            System.out.println(s.getStatus());
+        }
         while (EventManager.hasNextEvent()) {
             EventBase event = EventManager.nextEvent();
             event.execute();
+
+            for (Station s : FileManager.getStations()) {
+                System.out.println(s.getStatus());
+            }
+
             System.out.println("Events remaining: " + EventManager.getEventQueue().toArray().length);
-            System.out.println("\nEnter anything to continue.. ");
-            sc.next();
             EventManager.removeEvent(event);
         }
 

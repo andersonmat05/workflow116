@@ -4,10 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="32f335e1-3ce8-409f-a022-3704abdea5dc" name="Changes" comment="">
+    <list default="true" id="32f335e1-3ce8-409f-a022-3704abdea5dc" name="Changes" comment="Calculate task end time">
+      <change afterPath="$PROJECT_DIR$/src/Settings.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/EventManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/EventManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Job.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Job.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EventStationBeginTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/EventStationBeginTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EventStationEndTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/EventStationEndTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FileManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Station.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Station.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Task.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,11 +116,27 @@
       <workItem from="1715689455693" duration="695000" />
       <workItem from="1715708977310" duration="8960000" />
       <workItem from="1715803059567" duration="5931000" />
-      <workItem from="1715930217748" duration="1130000" />
+      <workItem from="1715930217748" duration="1178000" />
+      <workItem from="1715944614953" duration="268000" />
+      <workItem from="1715944899599" duration="131000" />
+      <workItem from="1716027591345" duration="4974000" />
     </task>
+    <task id="LOCAL-00001" summary="Calculate task end time">
+      <option name="closed" value="true" />
+      <created>1715931397884</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1715931397884</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Calculate task end time" />
+    <option name="LAST_COMMIT_MESSAGE" value="Calculate task end time" />
   </component>
 </project>

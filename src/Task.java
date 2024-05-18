@@ -32,10 +32,13 @@ public final class Task {
 
     @Override
     public String toString() {
+        return taskType.getTaskId();
+        /*
         return "Task{" +
                 "taskType=" + taskType.toString() +
                 ", size=" + size +
                 '}';
+         */
     }
 
     public float getSize() {

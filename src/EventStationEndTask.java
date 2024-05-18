@@ -8,17 +8,26 @@ public class EventStationEndTask extends EventBase {
         this.task = task;
     }
 
+    public Station getStation() {
+        return station;
+    }
+
     @Override
     public String toString() {
         return "EventStationEndTask{" +
-                "station=" + station +
-                ", task=" + task +
+                "station=" + station.getStationID() +
+                ", task=" + task.getID() +
+                ", time=" + time +
                 '}';
     }
 
     @Override
     void execute() {
-        System.out.println(this);
-        station.beginExecuteTask(task);
+        if (Settings.DEBUG)
+            System.out.println("EventStationEndTask for " + task.getID() + " executed at: " + time);
+
+        station.endExecuteTask(task);
+        // notify manager to continue event chain
+        EventManager.OnStationEndTask(this);
     }
 }

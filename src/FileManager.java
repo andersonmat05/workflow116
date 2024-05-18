@@ -104,7 +104,7 @@ public class FileManager {
         // file not found thrown here
         Scanner sc = new Scanner(new File(jobFile));
         int lineIndex = 0;
-
+        
         Set<TaskType> taskTypes = new HashSet<>(Set.of());
 
         currentSection = WorkflowSection.INVALID_SECTION;

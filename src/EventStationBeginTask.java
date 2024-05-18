@@ -11,14 +11,17 @@ public class EventStationBeginTask extends EventBase {
     @Override
     public String toString() {
         return "EventStationBeginTask{" +
-                "station=" + station +
-                ", task=" + task +
+                "station=" + station.getStationID() +
+                ", task=" + task.getID() +
+                ", time=" + time +
                 '}';
     }
 
     @Override
     void execute() {
-        System.out.println(this);
-        station.endExecuteTask(task);
+        if (Settings.DEBUG)
+            System.out.println("EventStationBeginTask for " + task.getID() + " executed at: " + time);
+
+        station.beginExecuteTask(task);
     }
 }

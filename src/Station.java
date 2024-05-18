@@ -29,6 +29,10 @@ public class Station {
                 '}';
     }
 
+    public String getStatus() {
+        return String.format("STATION %s - Queue: %s  Execution: %s", getStationID(), getTasksInQueue().toString(), getTasksInExecution().toString());
+    }
+
     public String getStationID() {
         return stationID;
     }
@@ -70,8 +74,9 @@ public class Station {
         return capacity - tasksInExecution.size();
     }
 
+    // move task from queue to execution
     public boolean beginExecuteTask(Task task) {
-        if (tasks.contains(task) && tasksInQueue.contains(task)) {
+        if (tasksInQueue.contains(task)) {
             tasksInExecution.add(task);
             tasksInQueue.remove(task);
             return true;
@@ -81,8 +86,9 @@ public class Station {
         }
     }
 
+    // remove task from execution
     public boolean endExecuteTask(Task task) {
-        if (tasks.contains(task) && tasksInExecution.contains(task)) {
+        if (tasksInExecution.contains(task)) {
             tasksInExecution.remove(task);
             return true;
         } else {
