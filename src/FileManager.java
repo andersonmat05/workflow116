@@ -15,30 +15,25 @@ public class FileManager {
     public static final String REGEX_FLAG = "^[YN]$";
     public static final String REGEX_FLOAT = "^([0-9]*[.])?[0-9]+$";
 
+    // Errors
     private static final ArrayList<FileErrorException> jobFileErrors = new ArrayList<>();
     private static final ArrayList<FileErrorException> workflowFileErrors = new ArrayList<>();
 
+    // Data
     private static final Set<TaskType> taskTypes = new HashSet<>();
     private static final Set<JobType> jobTypes = new HashSet<>();
     private static final Set<Station> stations = new HashSet<>();
     private static final Set<Job> jobs = new HashSet<>();
 
+    // Parser globals
     private static WorkflowSection currentSection;
-    private static int taskParserIterator; // used global field instead of defining mutable class just for one function
+    private static int taskParserIterator; // used global field instead of defining mutable int class just for one function
 
     private enum WorkflowSection {
         INVALID_SECTION,
         TASKTYPES,
         JOBTYPES,
         STATIONS
-    }
-
-    public static Set<TaskType> getTaskTypes() {
-        return taskTypes;
-    }
-
-    public static Set<JobType> getJobTypes() {
-        return jobTypes;
     }
 
     public static Set<Station> getStations() {
@@ -101,8 +96,6 @@ public class FileManager {
         // file not found thrown here
         Scanner sc = new Scanner(new File(jobFile));
         int lineIndex = 0;
-
-        Set<TaskType> taskTypes = new HashSet<>(Set.of());
 
         currentSection = WorkflowSection.INVALID_SECTION;
 
@@ -240,7 +233,6 @@ public class FileManager {
                         break;
                     case STATIONS:
                         if (lineElements[i].trim().matches(REGEX_STATION)) {
-                            // todo: Check arg types
                             if (lineElements.length < 5) {
                                 throw new FileErrorException(lineIndex, FileErrorException.ExceptionCause.ARGS_FEW);
                             }
@@ -258,9 +250,13 @@ public class FileManager {
                             }
                             if (lineElements[i + 2].trim().matches(REGEX_FLAG)) {
                                 multiFlag = lineElements[i + 2].trim().equalsIgnoreCase("Y");
+                            } else {
+                                throw new FileErrorException(lineIndex, FileErrorException.ExceptionCause.STATION_FLAG_INVALID);
                             }
                             if (lineElements[i + 3].trim().matches(REGEX_FLAG)) {
                                 fifoFlag = lineElements[i + 3].trim().equalsIgnoreCase("Y");
+                            }  else {
+                                throw new FileErrorException(lineIndex, FileErrorException.ExceptionCause.STATION_FLAG_INVALID);
                             }
 
                             ArrayList<Task> tasks = new ArrayList<>();
@@ -281,9 +277,9 @@ public class FileManager {
                             taskParserIterator = -1;
 
                             parsedObjects.add(new Station(stationId, stationCapacity, multiFlag, fifoFlag, tasks));
+                        }  else {
+                            throw new FileErrorException(lineIndex, FileErrorException.ExceptionCause.STATION_ID_INVALID);
                         }
-                    default:
-                        break;
                 }
             }
         }
@@ -360,15 +356,8 @@ public class FileManager {
             return null;
         }
         // Split the line in whitespaces
-        String[] args = jobString.trim().split("\\s+");
+        String[] args = getJobArgs(jobString, lineIndex);
 
-        // Ensure there is 4 arguments
-        if (args.length < 4) {
-            throw new FileErrorException(lineIndex, FileErrorException.ExceptionCause.ARGS_FEW);
-        } else if (args.length > 4) {
-            throw new FileErrorException(lineIndex, FileErrorException.ExceptionCause.ARGS_MANY);
-        }
-        // todo: check if unique
         String jobID = args[0];
 
         // Find matching id from types
@@ -399,6 +388,25 @@ public class FileManager {
         }
         // Create and return job object
         return new Job(jobID, jobType, startTime, duration);
+    }
+
+    private static String[] getJobArgs(String jobString, int lineIndex) throws FileErrorException {
+        String[] args = jobString.trim().split("\\s+");
+
+        // Ensure there is 4 arguments
+        if (args.length < 4) {
+            throw new FileErrorException(lineIndex, FileErrorException.ExceptionCause.ARGS_FEW);
+        } else if (args.length > 4) {
+            throw new FileErrorException(lineIndex, FileErrorException.ExceptionCause.ARGS_MANY);
+        }
+
+        // check if id is unique
+        for (Job job : jobs) {
+            if (job.getJobID().equals(args[0])) {
+                throw new FileErrorException(lineIndex, FileErrorException.ExceptionCause.JOB_INVALID);
+            }
+        }
+        return args;
     }
 
     /** Prints all errors encountered in order */
