@@ -49,8 +49,6 @@ public class FileManager {
         return jobs;
     }
 
-    // private static ArrayList<Job> Jobs = new ArrayList<>();
-    // public static ArrayList<Job> getJobs(){return Jobs;}
     private static class TaskTypeNotFoundException extends RuntimeException {
     }
 
@@ -95,7 +93,6 @@ public class FileManager {
             }
         }
         sc.close();
-        // Jobs = jobs;
         return jobs;
     }
 
@@ -104,7 +101,7 @@ public class FileManager {
         // file not found thrown here
         Scanner sc = new Scanner(new File(jobFile));
         int lineIndex = 0;
-        
+
         Set<TaskType> taskTypes = new HashSet<>(Set.of());
 
         currentSection = WorkflowSection.INVALID_SECTION;
@@ -285,6 +282,7 @@ public class FileManager {
 
                             parsedObjects.add(new Station(stationId, stationCapacity, multiFlag, fifoFlag, tasks));
                         }
+                    default:
                         break;
                 }
             }
