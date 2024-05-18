@@ -30,8 +30,8 @@ public class FileErrorException extends Exception {
 
     public enum ExceptionCause {
         UNKNOWN(ExceptionType.UNKNOWN, "An unknown error occurred."),
-        LINE_BLANK(ExceptionType.SYNTAX_ERROR , "Line is blank."),
-        ARGS_FEW(ExceptionType.SYNTAX_ERROR,"Too few arguments supplied."),
+        LINE_BLANK(ExceptionType.SYNTAX_ERROR, "Line is blank."),
+        ARGS_FEW(ExceptionType.SYNTAX_ERROR, "Too few arguments supplied."),
         ARGS_MANY(ExceptionType.SYNTAX_ERROR, "Too many arguments supplied."),
         // job
         START_TIME_INVALID(ExceptionType.SEMANTIC_ERROR, "Specified start time could not be parsed as a number."),
@@ -47,6 +47,7 @@ public class FileErrorException extends Exception {
         STATION_CAPACITY_INVALID(ExceptionType.SEMANTIC_ERROR, "Station capacity is defined incorrectly."),
         JOB_INVALID(ExceptionType.SEMANTIC_ERROR, "Job type defined incorrectly."),
         TASKTYPE_NOT_DEFINED(ExceptionType.SEMANTIC_ERROR, "Task type not defined."),
+        TASK_PLUSMINUS_INVALID(ExceptionType.SEMANTIC_ERROR, "Task' plusminus defined incorrectly"),
         // end workflow
         ;
 
