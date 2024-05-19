@@ -58,11 +58,10 @@ public class EventManager {
                 // create start and end events for the task
                 AddEvent(new EventStationBeginTask(taskJob.getStartTime(), station, task));
                 AddEvent(new EventStationEndTask(endTime, station, task));
-
-                System.out.printf("[%s] Task %s assigned to %s, start: %f end: %f\n", EventManager.class.getName(), task.getID(), station.getID(), startTime, endTime);
+                if (Settings.DEBUG)
+                    System.out.printf("[%s] Task %s assigned to %s, start: %f end: %f\n", EventManager.class.getName(), task.getID(), station.getID(), startTime, endTime);
             }
         }
-        System.out.println(station);
     }
 
     public static void OnStationBeginTask(EventStationBeginTask event) {
@@ -71,6 +70,15 @@ public class EventManager {
 
     public static void OnStationEndTask(EventStationEndTask event) {
         Time = event.time;
+
+        // record tardiness
+        Job eventJob = FindJobFromTask(event.getTask());
+        assert eventJob != null;
+        final float deadline = eventJob.getStartTime() + eventJob.getDuration();
+        if (Time > deadline) {
+            event.getStation().addTardiness(Time - deadline);
+        }
+
         AssignTasks(event.getStation());
     }
 

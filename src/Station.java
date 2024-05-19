@@ -10,12 +10,17 @@ public class Station {
     private final ArrayList<Task> tasksInExecution = new ArrayList<>();
     private final ArrayList<Task> tasksInQueue = new ArrayList<>();
 
+    private float tardiness;
+    private final int taskSize;
+
     public Station(String stationID, int capacity, boolean multiFlag, boolean fifoFlag, ArrayList<Task> tasks) {
         this.stationID = stationID;
         this.capacity = capacity;
         this.multiFlag = multiFlag;
         this.fifoFlag = fifoFlag;
         this.tasks = tasks;
+        tardiness = 0;
+        taskSize = tasks.size();
     }
 
     @Override
@@ -45,6 +50,14 @@ public class Station {
 
     public ArrayList<Task> getTasks() {
         return tasks;
+    }
+
+    public void addTardiness(float tardiness) {
+        this.tardiness += tardiness;
+    }
+
+    public float getAverageTardiness() {
+        return tardiness / taskSize;
     }
 
     public Task getNextTask() {

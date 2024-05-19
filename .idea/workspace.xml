@@ -4,14 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="32f335e1-3ce8-409f-a022-3704abdea5dc" name="Changes" comment="Add more errors">
+    <list default="true" id="32f335e1-3ce8-409f-a022-3704abdea5dc" name="Changes" comment="Code cleanup">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FileErrorException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FileErrorException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FileManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Job.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Job.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/JobType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/JobType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/job.txt" beforeDir="false" afterPath="$PROJECT_DIR$/job.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EventManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/EventManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EventStationBeginTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/EventStationBeginTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EventStationEndTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/EventStationEndTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Settings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Settings.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Station.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Station.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Task.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,7 +119,10 @@
       <workItem from="1715944614953" duration="268000" />
       <workItem from="1715944899599" duration="131000" />
       <workItem from="1716027591345" duration="9384000" />
-      <workItem from="1716050839165" duration="6864000" />
+      <workItem from="1716050839165" duration="7028000" />
+      <workItem from="1716064447601" duration="271000" />
+      <workItem from="1716116084193" duration="329000" />
+      <workItem from="1716116431595" duration="4355000" />
     </task>
     <task id="LOCAL-00001" summary="Calculate task end time">
       <option name="closed" value="true" />
@@ -144,7 +148,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716057788592</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Code cleanup">
+      <option name="closed" value="true" />
+      <created>1716058169644</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1716058169644</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -154,7 +166,8 @@
     <MESSAGE value="Calculate task end time" />
     <MESSAGE value="Event execution chain" />
     <MESSAGE value="Add more errors" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add more errors" />
+    <MESSAGE value="Code cleanup" />
+    <option name="LAST_COMMIT_MESSAGE" value="Code cleanup" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

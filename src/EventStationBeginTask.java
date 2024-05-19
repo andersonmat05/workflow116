@@ -8,6 +8,14 @@ public class EventStationBeginTask extends EventBase {
         this.task = task;
     }
 
+    public Station getStation() {
+        return station;
+    }
+
+    public Task getTask() {
+        return task;
+    }
+
     @Override
     public String toString() {
         return "EventStationBeginTask{" +
@@ -23,6 +31,8 @@ public class EventStationBeginTask extends EventBase {
             System.out.println("EventStationBeginTask for " + task.getID() + " executed at: " + time);
 
         station.beginExecuteTask(task);
+
+        System.out.printf("Station %s has started task %s\n", station.getID(), task.getID());
         // notify manager
         EventManager.OnStationBeginTask(this);
     }

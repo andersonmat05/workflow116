@@ -12,6 +12,10 @@ public class EventStationEndTask extends EventBase {
         return station;
     }
 
+    public Task getTask() {
+        return task;
+    }
+
     @Override
     public String toString() {
         return "EventStationEndTask{" +
@@ -25,6 +29,8 @@ public class EventStationEndTask extends EventBase {
     void execute() {
         if (Settings.DEBUG)
             System.out.println("EventStationEndTask for " + task.getID() + " executed at: " + time);
+
+        System.out.printf("Station %s has finished task %s\n", station.getID(), task.getID());
 
         station.endExecuteTask(task);
         // notify manager to continue event chain

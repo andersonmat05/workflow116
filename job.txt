@@ -1,4 +1,4 @@
-Job1 J1 1 30
+Job1 J1 1 5
 Job2 J2 2 29
 Job3 J3 5 40
 Job4 J4 7 35
