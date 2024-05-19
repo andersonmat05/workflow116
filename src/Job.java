@@ -1,3 +1,4 @@
+@SuppressWarnings("ClassCanBeRecord")
 public class Job {
     private final String jobID;
     private final JobType jobType;

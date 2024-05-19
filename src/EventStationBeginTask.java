@@ -8,14 +8,6 @@ public class EventStationBeginTask extends EventBase {
         this.task = task;
     }
 
-    public Station getStation() {
-        return station;
-    }
-
-    public Task getTask() {
-        return task;
-    }
-
     @Override
     public String toString() {
         return "EventStationBeginTask{" +

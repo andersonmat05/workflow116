@@ -9,15 +9,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="32f335e1-3ce8-409f-a022-3704abdea5dc" name="Changes" comment="Fix task parsing">
+    <list default="true" id="32f335e1-3ce8-409f-a022-3704abdea5dc" name="Changes" comment="Multiflag check">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/job.txt" beforeDir="false" afterPath="$PROJECT_DIR$/job.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/EventManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/EventManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EventStationBeginTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/EventStationBeginTask.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/FileErrorException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FileErrorException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FileManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Job.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Job.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/JobType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/JobType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Settings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Settings.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Station.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Station.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +46,9 @@
     &quot;accountId&quot;: &quot;c13b26e4-b076-4642-b414-c033ff86e205&quot;
   }
 }</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
 }</component>
@@ -73,6 +75,7 @@
     "project.structure.last.edited": "Artifacts",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
+    "run.code.analysis.last.selected.profile": "pProject Default",
     "settings.editor.selected.configurable": "preferences.intentionPowerPack",
     "vue.rearranger.settings.migration": "true"
   }
@@ -132,7 +135,7 @@
       <workItem from="1716116084193" duration="329000" />
       <workItem from="1716116431595" duration="5333000" />
       <workItem from="1716137294190" duration="970000" />
-      <workItem from="1716140170785" duration="4584000" />
+      <workItem from="1716140170785" duration="4847000" />
     </task>
     <task id="LOCAL-00001" summary="Calculate task end time">
       <option name="closed" value="true" />
@@ -182,7 +185,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716138214187</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Multiflag check">
+      <option name="closed" value="true" />
+      <created>1716144814028</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1716144814028</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -205,7 +216,8 @@
     <MESSAGE value="Add more errors" />
     <MESSAGE value="Code cleanup" />
     <MESSAGE value="Fix task parsing" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix task parsing" />
+    <MESSAGE value="Multiflag check" />
+    <option name="LAST_COMMIT_MESSAGE" value="Multiflag check" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

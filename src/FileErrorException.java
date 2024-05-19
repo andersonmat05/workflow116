@@ -29,16 +29,13 @@ public class FileErrorException extends Exception {
     }
 
     public enum ExceptionCause {
-        UNKNOWN(ExceptionType.UNKNOWN, "An unknown error occurred."),
-        LINE_BLANK(ExceptionType.SYNTAX_ERROR, "Line is blank."),
+        // args
         ARGS_FEW(ExceptionType.SYNTAX_ERROR, "Too few arguments supplied."),
         ARGS_MANY(ExceptionType.SYNTAX_ERROR, "Too many arguments supplied."),
         // job
         START_TIME_INVALID(ExceptionType.SEMANTIC_ERROR, "Specified start time could not be parsed as a number."),
         DURATION_INVALID(ExceptionType.SEMANTIC_ERROR, "Specified duration could not be parsed as a number."),
         JOBTYPE_INVALID(ExceptionType.SEMANTIC_ERROR, "Specified job type is not defined in workflow file."),
-        // end job
-
         // workflow
         SECTION_IDENTIFIER_INVALID(ExceptionType.SEMANTIC_ERROR, "Unknown section identifier."),
         TASKTYPES_NOT_FIRST(ExceptionType.SYNTAX_ERROR, "TASKTYPES must be the first section in workflow file."),
@@ -50,8 +47,6 @@ public class FileErrorException extends Exception {
         JOB_INVALID(ExceptionType.SEMANTIC_ERROR, "Job type defined incorrectly."),
         MULTIFLAG_FAIL(ExceptionType.SEMANTIC_ERROR, "Station is not marked as multiflag but has tasks from multiple jobs."),
         TASKTYPE_NOT_DEFINED(ExceptionType.SEMANTIC_ERROR, "Task type not defined."),
-        TASK_PLUSMINUS_INVALID(ExceptionType.SEMANTIC_ERROR, "Task' plus-minus defined incorrectly"),
-        // end workflow
         ;
 
         /** Type of the error. **/

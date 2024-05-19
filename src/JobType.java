@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 
+@SuppressWarnings("ClassCanBeRecord")
 public final class JobType {
     public final String Id;
     private final ArrayList<Task> tasks;

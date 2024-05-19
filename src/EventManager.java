@@ -1,11 +1,10 @@
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Set;
 
 public class EventManager {
 
     private static boolean IsInitialized = false;
-    private static final ArrayList<EventBase> eventQueue = new ArrayList<EventBase>();
+    private static final ArrayList<EventBase> eventQueue = new ArrayList<>();
     private static float Time;
 
     /** Returns the last time an event has executed. */
