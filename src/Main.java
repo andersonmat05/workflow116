@@ -4,42 +4,41 @@ import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
-
         if (!FileManager.parseFiles("workflow.txt", "job.txt")) {
             // End program if there were errors.
             System.out.println("\nAborting execution.");
-            return;
-        }
+        } else {
 
-        // array used for cosmetic purposes
-        ArrayList<Station> stations = sortStations(FileManager.getStations());
-
-        for (Station s : stations) {
-            System.out.println("Station " + s.getID() + ": " + Arrays.toString(s.getTasks().toArray()));
-        }
-
-        EventManager.Init(FileManager.getStations(), FileManager.getJobs());
-
-        while (EventManager.hasNextEvent()) {
-            EventManager.executeNextEvent();
-            System.out.println("\nTime: " + EventManager.getTime());
+            // array used for cosmetic purposes
+            ArrayList<Station> stations = sortStations(FileManager.getStations());
 
             for (Station s : stations) {
-                System.out.println(s.getStatus());;
+                System.out.println("Station " + s.getID() + ": " + Arrays.toString(s.getTasks().toArray()));
             }
 
-            if (Settings.DEBUG)
-                System.out.println("Events remaining: " + Arrays.toString(EventManager.getEventQueue().toArray()));
-        }
+            EventManager.Init(FileManager.getStations(), FileManager.getJobs());
 
-        System.out.println("\nExecution finished. Total time: " + EventManager.getTime());
+            while (EventManager.hasNextEvent()) {
+                EventManager.executeNextEvent();
+                System.out.println("\nTime: " + EventManager.getTime());
 
-        float totalTardiness = 0.f;
-        for (Station s : stations) {
-            System.out.println("Station " + s.getID() + " tardiness: " + s.getAverageTardiness());
-            totalTardiness += s.getAverageTardiness();
+                for (Station s : stations) {
+                    System.out.println(s.getStatus());
+                }
+
+                if (Settings.DEBUG)
+                    System.out.println("Events remaining: " + Arrays.toString(EventManager.getEventQueue().toArray()));
+            }
+
+            System.out.println("\nExecution finished. Total time: " + EventManager.getTime());
+
+            float totalTardiness = 0.f;
+            for (Station s : stations) {
+                System.out.println("Station " + s.getID() + " tardiness: " + s.getAverageTardiness());
+                totalTardiness += s.getAverageTardiness();
+            }
+            System.out.println("Average tardiness: " + totalTardiness / FileManager.getStations().size());
         }
-        System.out.println("Average tardiness: " + totalTardiness/FileManager.getStations().size());
     }
 
     // Sorts set of stations alphabetically based on ids

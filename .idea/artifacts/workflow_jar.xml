@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="workflow:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/workflow_jar</output-path>
+    <root id="archive" name="workflow.jar">
+      <element id="module-output" name="workflow" />
+    </root>
+  </artifact>
+</component>

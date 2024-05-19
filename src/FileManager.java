@@ -54,6 +54,7 @@ public class FileManager {
             parseWorkflowFile(workflowFile);
         } catch (FileNotFoundException e) {
             System.out.println("Error reading workflow file: " + e.getMessage());
+            return false;
         }
 
         // Parse job file
@@ -62,6 +63,7 @@ public class FileManager {
             jobs.addAll(parseJobFile(jobFile));
         } catch (FileNotFoundException e) {
             System.out.println("Error reading job file: " + e.getMessage());
+            return false;
         }
 
         // Report all errors
