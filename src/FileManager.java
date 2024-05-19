@@ -269,7 +269,7 @@ public class FileManager {
                                 // break loop if not job args
                                 if (!lineElements[taskParserIterator].trim().matches(REGEX_TASK)
                                         && !lineElements[taskParserIterator].trim().matches(REGEX_FLOAT)) {
-                                    break;
+                                        throw new FileErrorException(lineIndex, FileErrorException.ExceptionCause.TASK_INVALID);
                                 }
                                 // look for task definitions
                                 tasks.add(parseTask(lineElements, lineIndex, true));
@@ -337,9 +337,7 @@ public class FileManager {
             } catch (TaskTypeNotFoundException e) {
                 throw new FileErrorException(lineIndex, FileErrorException.ExceptionCause.TASKTYPE_NOT_DEFINED);
             }
-        } else {
-            throw new FileErrorException(lineIndex, FileErrorException.ExceptionCause.TASK_INVALID);
-        }
+        } else return null;
     }
 
     private static TaskType findTaskTypeFromID(String taskID) throws TaskTypeNotFoundException {
