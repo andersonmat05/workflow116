@@ -48,8 +48,9 @@ public class FileErrorException extends Exception {
         STATION_CAPACITY_INVALID(ExceptionType.SEMANTIC_ERROR, "Station capacity is defined incorrectly."),
         STATION_FLAG_INVALID(ExceptionType.SEMANTIC_ERROR, "Flag is defined incorrectly."),
         JOB_INVALID(ExceptionType.SEMANTIC_ERROR, "Job type defined incorrectly."),
+        MULTIFLAG_FAIL(ExceptionType.SEMANTIC_ERROR, "Station is not marked as multiflag but has tasks from multiple jobs."),
         TASKTYPE_NOT_DEFINED(ExceptionType.SEMANTIC_ERROR, "Task type not defined."),
-        TASK_PLUSMINUS_INVALID(ExceptionType.SEMANTIC_ERROR, "Task' plusminus defined incorrectly"),
+        TASK_PLUSMINUS_INVALID(ExceptionType.SEMANTIC_ERROR, "Task' plus-minus defined incorrectly"),
         // end workflow
         ;
 

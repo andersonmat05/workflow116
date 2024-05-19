@@ -1,9 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 public class FileManager {
 
@@ -40,21 +37,19 @@ public class FileManager {
         return stations;
     }
 
-    public static Set<Job> getJobs() {
-        return jobs;
-    }
-
     private static class TaskTypeNotFoundException extends RuntimeException {
     }
 
     /** Parses both files and handles assignments, then reports errors */
     public static boolean parseFiles(String workflowFile, String jobFile) {
+        boolean success = true;
+
         // Parse workflow file
         try {
             parseWorkflowFile(workflowFile);
         } catch (FileNotFoundException e) {
             System.out.println("Error reading workflow file: " + e.getMessage());
-            return false;
+            success = false;
         }
 
         // Parse job file
@@ -63,11 +58,11 @@ public class FileManager {
             jobs.addAll(parseJobFile(jobFile));
         } catch (FileNotFoundException e) {
             System.out.println("Error reading job file: " + e.getMessage());
-            return false;
+            success = false;
         }
-
-        // Report all errors
-        return reportErrors();
+        if (success)
+            return reportErrors();
+        return false;
     }
 
     /**
@@ -97,9 +92,8 @@ public class FileManager {
     private static void parseWorkflowFile(String jobFile) throws FileNotFoundException {
         // file not found thrown here
         Scanner sc = new Scanner(new File(jobFile));
-        int lineIndex = 0;
-
         currentSection = WorkflowSection.INVALID_SECTION;
+        int lineIndex = 0;
 
         // populate section map by indexing file contents
         while (sc.hasNextLine()) {
@@ -146,9 +140,6 @@ public class FileManager {
      * @param lineIndex    Used for error reporting
      */
     private static ArrayList<Object> parseWorkflowLine(String[] lineElements, int lineIndex) throws FileErrorException {
-        // =System.out.println("Parsing line: " + lineIndex + " -> " +
-        // Arrays.toString(lineElements));
-
         ArrayList<Object> parsedObjects = new ArrayList<>();
 
         // iterate elements
@@ -277,6 +268,28 @@ public class FileManager {
                             // return to local
                             i = taskParserIterator;
                             taskParserIterator = -1;
+
+                            if (!multiFlag) {
+                                try {
+                                    // grab jobtype for the first task
+                                    JobType stationJobType = FindJobTypeFromTaskId(tasks.getFirst().getID());
+                                    // check other task's jobtype
+                                    if (tasks.size() > 1) {
+                                        for (int j = 1; j < tasks.size(); j++) {
+                                            JobType taskJobType = FindJobTypeFromTaskId(tasks.get(j).getID());
+                                            assert stationJobType != null;
+                                            assert taskJobType != null;
+                                            // check id match
+                                            System.out.printf("[%s] comparing %s to %s\n", stationId, stationJobType.Id, taskJobType.Id);
+                                            if (!taskJobType.Id.equals(stationJobType.Id)) {
+                                                throw new FileErrorException(lineIndex, FileErrorException.ExceptionCause.MULTIFLAG_FAIL);
+                                            }
+                                        }
+                                    }
+                                } catch (NullPointerException e) {
+                                    throw new FileErrorException(lineIndex, FileErrorException.ExceptionCause.MULTIFLAG_FAIL);
+                                }
+                            }
 
                             parsedObjects.add(new Station(stationId, stationCapacity, multiFlag, fifoFlag, tasks));
                         }  else {
@@ -430,5 +443,39 @@ public class FileManager {
             }
         }
         return bIsErrorFree;
+    }
+
+    public static Job FindJobFromTask(Task task) {
+        if (jobs.isEmpty())
+        {
+            System.out.println("Jobs are not initialized yet.");
+            return null;
+        }
+
+        for (Job job : jobs) {
+            for (Task jobTask : job.getJobType().getTasks()) {
+                if (jobTask.taskType.getTaskId().equals(task.taskType.Id)) {
+                    return job;
+                }
+            }
+        }
+        return null;
+    }
+
+    public static JobType FindJobTypeFromTaskId(String taskID) {
+        if (jobTypes.isEmpty())
+        {
+            System.out.println("jobsTypes are not initialized yet.");
+            return null;
+        }
+
+        for (JobType jobType : jobTypes) {
+            for (Task jobTask : jobType.getTasks()) {
+                if (jobTask.taskType.getTaskId().equals(taskID)) {
+                    return jobType;
+                }
+            }
+        }
+        return null;
     }
 }

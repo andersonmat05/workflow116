@@ -75,8 +75,8 @@ public class Station {
                         continue;
                     }
 
-                    Job taskJob = EventManager.FindJobFromTask(task);
-                    Job nextTaskJob = EventManager.FindJobFromTask(nextTask);
+                    Job taskJob = FileManager.FindJobFromTask(task);
+                    Job nextTaskJob = FileManager.FindJobFromTask(nextTask);
                     if (taskJob == null || nextTaskJob == null) {
                         continue;
                     }

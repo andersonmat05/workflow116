@@ -6,7 +6,6 @@ public class EventManager {
 
     private static boolean IsInitialized = false;
     private static final ArrayList<EventBase> eventQueue = new ArrayList<EventBase>();
-    private static Set<Job> jobs;
     private static float Time;
 
     /** Returns the last time an event has executed. */
@@ -19,14 +18,13 @@ public class EventManager {
     }
 
     /** Set up critical data for the manager and assign initial tasks to stations. */
-    public static void Init(Set<Station> stations, Set<Job> InJobs) {
+    public static void Init() {
         IsInitialized = true;
         eventQueue.clear();
-        jobs = InJobs;
         Time = 0.f;
 
         // Init stations
-        for (Station station : stations) {
+        for (Station station : FileManager.getStations()) {
             // clear arrays
             station.getTasksInQueue().clear();
             station.getTasksInExecution().clear();
@@ -44,7 +42,7 @@ public class EventManager {
 
             // grab the next task
             Task task = station.getNextTask();
-            Job taskJob = FindJobFromTask(task);
+            Job taskJob = FileManager.FindJobFromTask(task);
 
             if (task != null && taskJob != null) {
                 // move new task to queue from task list
@@ -72,7 +70,7 @@ public class EventManager {
         Time = event.time;
 
         // record tardiness
-        Job eventJob = FindJobFromTask(event.getTask());
+        Job eventJob = FileManager.FindJobFromTask(event.getTask());
         assert eventJob != null;
         final float deadline = eventJob.getStartTime() + eventJob.getDuration();
         if (Time > deadline) {
@@ -84,40 +82,6 @@ public class EventManager {
 
     public static void AddEvent(EventBase event) {
         eventQueue.add(event);
-    }
-
-    public static Job FindJobFromTask(Task task) {
-        if (!getIsInitialized())
-        {
-            System.out.println("Event Manager is not initialized yet.");
-            return null;
-        }
-
-        for (Job job : jobs) {
-            for (Task jobTask : job.getJobType().getTasks()) {
-                if (jobTask.taskType.getTaskId().equals(task.taskType.Id)) {
-                    return job;
-                }
-            }
-        }
-        return null;
-    }
-
-    public static Job FindJobFromId(String Id) {
-        if (!getIsInitialized())
-        {
-            System.out.println("Event Manager is not initialized yet.");
-            return null;
-        }
-
-        for (Job job : jobs) {
-            if (job.getJobID().equals(Id)) {
-                return job;
-            }
-        }
-        if (Settings.DEBUG)
-            System.out.println("FindJobFromId failed.");
-        return null;
     }
 
     public static boolean hasNextEvent() {

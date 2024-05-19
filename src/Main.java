@@ -16,7 +16,7 @@ public class Main {
                 System.out.println("Station " + s.getID() + ": " + Arrays.toString(s.getTasks().toArray()));
             }
 
-            EventManager.Init(FileManager.getStations(), FileManager.getJobs());
+            EventManager.Init();
 
             while (EventManager.hasNextEvent()) {
                 EventManager.executeNextEvent();
